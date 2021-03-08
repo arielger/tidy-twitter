@@ -8,14 +8,10 @@ import Sidebar from "../../components/Sidebar";
 
 // @TODO: Prevent showing dashboard if user is not logged in
 
-export default function Home({ followers, lists }) {
-  console.log("followers", followers);
-
-  console.log("lists", lists);
-
+export default function Home({ user, followers, lists }) {
   return (
     <Flex height="100vh" flexDir="row" overflow="hidden">
-      <Sidebar />
+      <Sidebar user={user} />
       <Flex as="main" justify="center" mt="40">
         <Box maxW="32rem">
           <Heading
@@ -29,7 +25,11 @@ export default function Home({ followers, lists }) {
           <ul>
             {followers.map(({ id, profile_image_url, name, screen_name }) => (
               <Flex p="1" key={id}>
-                <Avatar mr="3" name={name} src={profile_image_url}></Avatar>
+                <Avatar
+                  mr="3"
+                  name={name}
+                  src={profile_image_url.replace("normal", "bigger")}
+                ></Avatar>
                 <Flex direction="column">
                   <Text>{name}</Text>
                   <Text color="gray.400">@{screen_name}</Text>
@@ -59,12 +59,27 @@ export async function getServerSideProps({ req, res }) {
   // https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-friends-list
 
   // @TODO: Check how import all followers instead of the first 200
-  const [rawFollowers, rawLists] = await Promise.all([
+  const [rawUser, rawFollowers, rawLists] = await Promise.all([
+    T.get("account/verify_credentials", { skip_status: true }),
     T.get("friends/list", {
       count: 200, // max count
     }),
     T.get("lists/list"),
   ]);
+
+  const user = (({
+    id,
+    name,
+    screen_name,
+    description,
+    profile_image_url,
+  }) => ({
+    id,
+    name,
+    screen_name,
+    description,
+    profile_image_url,
+  }))(rawUser.data);
 
   // @TODO: Use lib method to get object keys
 
@@ -105,5 +120,5 @@ export async function getServerSideProps({ req, res }) {
     })
   );
 
-  return { props: { followers, lists } };
+  return { props: { user, followers, lists } };
 }

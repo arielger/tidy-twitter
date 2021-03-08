@@ -14,7 +14,7 @@ import { FaTwitter } from "react-icons/fa";
 
 import ActiveNextLink from "./ActiveNextLink";
 
-export default function Sidebar() {
+export default function Sidebar({ user }) {
   return (
     <Box
       w="72"
@@ -30,15 +30,14 @@ export default function Sidebar() {
         <Text size="sm">Tidy twitter</Text>
       </Heading>
       <Flex>
-        {/* @TODO: Use user real data instead of mock */}
         <Avatar
-          name="Ryan Florence"
-          src="https://bit.ly/ryan-florence"
+          name={user.name}
+          src={user.profile_image_url.replace("normal", "bigger")}
           mr="3"
         ></Avatar>
         <Flex flexDirection="column" mb="8">
-          <Text>Ryan Florence</Text>
-          <Text>@ryan.florence</Text>
+          <Text>{user.name}</Text>
+          <Text>@{user.screen_name}</Text>
         </Flex>
       </Flex>
       <VStack alignItems="stretch" spacing="2">

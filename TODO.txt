@@ -1,0 +1,4 @@
+[OK] Show real user data in Sidebar
+[] Style list of following
+[] Add checkbox to list of following
+[] Add logout button in sidebar
