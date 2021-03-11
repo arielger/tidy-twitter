@@ -1,44 +1,33 @@
-import { useState } from "react";
 import Twit from "twit";
 import Cookies from "cookies";
+import { useState } from "react";
 // import Head from "next/head";
 import { Heading, Text, Avatar, Box, Flex } from "@chakra-ui/react";
 
 import Sidebar from "../../components/Sidebar";
+import ListsList from "../../components/ListsList";
+import FollowingLists from "../../components/FollowingList";
 
 // @TODO: Prevent showing dashboard if user is not logged in
 
 export default function Home({ user, followers, lists }) {
+  console.log("followers", followers);
+  console.log("lists", lists);
+
+  const [selectedListId, setSelectedListId] = useState();
+
   return (
     <Flex height="100vh" flexDir="row" overflow="hidden">
       <Sidebar user={user} />
-      <Flex as="main" justify="center" mt="40">
-        <Box maxW="32rem">
-          <Heading
-            size="sm"
-            textTransform="uppercase"
-            letterSpacing="wide"
-            mb="8"
-          >
-            Dashboard
-          </Heading>
-          <ul>
-            {followers.map(({ id, profile_image_url, name, screen_name }) => (
-              <Flex p="1" key={id}>
-                <Avatar
-                  mr="3"
-                  name={name}
-                  src={profile_image_url.replace("normal", "bigger")}
-                ></Avatar>
-                <Flex direction="column">
-                  <Text>{name}</Text>
-                  <Text color="gray.400">@{screen_name}</Text>
-                </Flex>
-              </Flex>
-            ))}
-          </ul>
-        </Box>
-      </Flex>
+      <ListsList
+        lists={lists}
+        selectedListId={selectedListId}
+        setSelectedListId={setSelectedListId}
+      />
+      <FollowingLists
+        users={followers}
+        selectedList={lists.find((list) => list.id === selectedListId)}
+      />
     </Flex>
   );
 }
@@ -109,16 +98,17 @@ export async function getServerSideProps({ req, res }) {
     })
   );
 
-  const lists = rawLists.data.map(
-    ({ id, name, uri, mode, member_count, created_at }) => ({
+  const lists = rawLists.data
+    .map(({ id, name, uri, mode, member_count, created_at }) => ({
       id,
       name,
       uri,
       mode,
       member_count,
       created_at,
-    })
-  );
+    }))
+    // Sort by member count DESC
+    .sort((listA, listB) => listB.member_count - listA.member_count);
 
   return { props: { user, followers, lists } };
 }

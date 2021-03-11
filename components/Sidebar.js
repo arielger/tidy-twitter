@@ -41,7 +41,8 @@ export default function Sidebar({ user }) {
         </Flex>
       </Flex>
       <VStack alignItems="stretch" spacing="2">
-        <ActiveNextLink href="/dashboard/following" passHref>
+        {/* @TODO: Show lists link when screen is ready */}
+        {/* <ActiveNextLink href="/dashboard/following" passHref>
           <Link
             p="2"
             borderRadius="md"
@@ -56,12 +57,12 @@ export default function Sidebar({ user }) {
             <Icon as={BiGroup} mr="2" boxSize="6" color="gray.500"></Icon>
             Following
           </Link>
-        </ActiveNextLink>
-        {/* @TODO: Show lists link when screen is ready */}
-        {/* <ActiveNextLink href="/dashboard/lists" passHref>
+        </ActiveNextLink> */}
+        <ActiveNextLink href="/dashboard/lists" passHref>
           <Link
             p="2"
             borderRadius="md"
+            backgroundColor="gray.200"
             display="flex"
             alignItems="center"
             _hover={{
@@ -72,7 +73,7 @@ export default function Sidebar({ user }) {
             <Icon as={BiListUl} mr="2" boxSize="6" color="gray.500"></Icon>
             Lists
           </Link>
-        </ActiveNextLink> */}
+        </ActiveNextLink>
       </VStack>
     </Box>
   );

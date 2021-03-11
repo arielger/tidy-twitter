@@ -1,4 +1,6 @@
 [OK] Show real user data in Sidebar
+[ok] Add list of lists + style
+    - Make list item selectable and save state of which one is selected
 [] Style list of following
 [] Add checkbox to list of following
 [] Add logout button in sidebar
