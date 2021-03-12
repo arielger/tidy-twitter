@@ -7,7 +7,6 @@ import {
   Box,
   Flex,
   IconButton,
-  Icon,
   Menu,
   MenuButton,
   MenuList,
@@ -55,12 +54,13 @@ export default function ListsList({
       borderColor="gray.200"
     >
       <Flex
+        h="24"
         alignItems="center"
         justifyContent="space-between"
         px="3"
-        py="6"
         borderBottom="1px"
         borderColor="gray.200"
+        flexShrink="0"
       >
         <Heading size="md">Lists</Heading>
         <Button size="sm">Create</Button>
@@ -98,17 +98,18 @@ export default function ListsList({
                 borderBottom="1px"
                 borderColor="gray.200"
                 borderLeftWidth="4px"
-                borderLeftColor={isActive ? listColor : "transparent"}
                 _hover={{
-                  borderLeftColor: listHoverColor,
+                  borderLeftColor: isActive ? listColor : listHoverColor,
                 }}
                 _focus={{
                   boxShadow: "outline",
                   outline: "none",
                 }}
                 _active={{
-                  boxShadow: "outline",
+                  borderLeftColor: listColor,
+                  outline: "none",
                 }}
+                borderLeftColor={isActive ? listColor : "transparent"}
                 textAlign="left"
                 onClick={() => {
                   setSelectedListId(list.id);

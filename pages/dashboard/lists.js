@@ -1,6 +1,6 @@
 import Twit from "twit";
 import Cookies from "cookies";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import Head from "next/head";
 import { Heading, Text, Avatar, Box, Flex } from "@chakra-ui/react";
 
@@ -15,6 +15,10 @@ export default function Home({ user, followers, lists }) {
   console.log("lists", lists);
 
   const [selectedListId, setSelectedListId] = useState();
+
+  useEffect(() => {
+    console.log("selectedListId", selectedListId);
+  }, [selectedListId]);
 
   return (
     <Flex height="100vh" flexDir="row" overflow="hidden">
