@@ -7,7 +7,7 @@ export default function Home() {
 
   const logInWithTwitter = () => {
     setIsAuthLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/twitter-login`)
+    fetch(`http://${process.env.NEXT_PUBLIC_SITE_URL}/api/twitter-login`)
       .then((response) => response.json())
       .then(({ requestToken }) => {
         setIsAuthLoading(false);

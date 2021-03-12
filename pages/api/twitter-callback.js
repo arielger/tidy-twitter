@@ -25,5 +25,8 @@ export default async function handler(req, res) {
   cookies.set("twitterAccessToken", response.oauth_token);
   cookies.set("twitterAccessTokenSecret", response.oauth_token_secret);
 
-  res.redirect(302, `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/lists`);
+  res.redirect(
+    302,
+    `http://${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/lists`
+  );
 }
