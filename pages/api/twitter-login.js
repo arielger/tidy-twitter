@@ -1,5 +1,7 @@
 const Cookies = require("cookies");
 
+const { API_URL } = require("../../utils/env-variables");
+
 export default async function handler(req, res) {
   console.log("TWITTER LOGIN API");
 
@@ -13,7 +15,7 @@ export default async function handler(req, res) {
   });
 
   const response = await twitterSignIn.getRequestToken({
-    oauth_callback: `http://${process.env.NEXT_PUBLIC_SITE_URL}/api/twitter-callback`,
+    oauth_callback: `${API_URL}/twitter-callback`,
   });
 
   const requestToken = response.oauth_token;

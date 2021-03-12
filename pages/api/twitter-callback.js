@@ -1,5 +1,7 @@
 const Cookies = require("cookies");
 
+const { SITE_URL } = require("../../utils/env-variables");
+
 export default async function handler(req, res) {
   console.log("TWITTER CALLBACK API");
   const twitterSignIn = require("twittersignin")({
@@ -25,8 +27,5 @@ export default async function handler(req, res) {
   cookies.set("twitterAccessToken", response.oauth_token);
   cookies.set("twitterAccessTokenSecret", response.oauth_token_secret);
 
-  res.redirect(
-    302,
-    `http://${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/lists`
-  );
+  res.redirect(302, `${SITE_URL}/dashboard/lists`);
 }

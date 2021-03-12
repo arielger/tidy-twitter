@@ -2,12 +2,14 @@ import { useState } from "react";
 import Head from "next/head";
 import { Heading, Text, Button, Box, Flex } from "@chakra-ui/react";
 
+import { API_URL } from "../utils/env-variables";
+
 export default function Home() {
   const [isAuthLoading, setIsAuthLoading] = useState(false);
 
   const logInWithTwitter = () => {
     setIsAuthLoading(true);
-    fetch(`http://${process.env.NEXT_PUBLIC_SITE_URL}/api/twitter-login`)
+    fetch(`${API_URL}/twitter-login`)
       .then((response) => response.json())
       .then(({ requestToken }) => {
         setIsAuthLoading(false);
