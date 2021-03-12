@@ -39,11 +39,25 @@ export default function Home({ user, followers, lists }) {
 export async function getServerSideProps({ req, res }) {
   const cookies = new Cookies(req, res);
 
+  const twitterAccessToken = cookies.get("twitterAccessToken");
+  const twitterAccessTokenSecret = cookies.get("twitterAccessTokenSecret");
+
+  // @TODO: Review best auth solution
+  // If user is not logged in
+  if (!twitterAccessToken || !twitterAccessTokenSecret) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   var T = new Twit({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    access_token: cookies.get("twitterAccessToken"),
-    access_token_secret: cookies.get("twitterAccessTokenSecret"),
+    access_token: twitterAccessToken,
+    access_token_secret: twitterAccessTokenSecret,
     timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
     strictSSL: true, // optional - requires SSL certificates to be valid.
   });

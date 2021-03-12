@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   });
 
   const response = await twitterSignIn.getRequestToken({
-    oauth_callback: "http://localhost:3000/api/twitter-callback",
+    oauth_callback: `${process.env.NEXT_PUBLIC_SITE_URL}/api/twitter-callback`,
   });
 
   const requestToken = response.oauth_token;
