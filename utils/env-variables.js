@@ -5,8 +5,8 @@ const siteUrl =
     ? "tidy-twitter.vercel.app"
     : process.env.NEXT_PUBLIC_SITE_URL;
 
-const SITE_URL = `${protocol}:/${siteUrl}`;
-const API_URL = `${protocol}:/${siteUrl}/api`;
+const SITE_URL = `${protocol}://${siteUrl}`;
+const API_URL = `${protocol}://${siteUrl}/api`;
 
 module.exports = {
   SITE_URL,
