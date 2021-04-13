@@ -7,10 +7,11 @@ import {
   Text,
   Icon,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 import { BiGroup, BiUserPlus } from "react-icons/bi";
 
-export default function FollowingList({ users, selectedList }) {
+export default function FollowingList({ loading, users, selectedList }) {
   return (
     <Flex as="main" flexGrow="1" flexDirection="column">
       <Flex
@@ -35,20 +36,26 @@ export default function FollowingList({ users, selectedList }) {
           Add members
         </Button>
       </Flex>
-      <Flex as="ul" overflow="auto" flexDirection="column">
-        {users.map(({ id, profile_image_url, name, screen_name }) => (
-          <Flex key={id} borderBottom="1px" borderColor="gray.200" p="3">
-            <Avatar
-              mr="3"
-              name={name}
-              src={profile_image_url.replace("normal", "bigger")}
-            ></Avatar>
-            <Flex direction="column">
-              <Text>{name}</Text>
-              <Text color="gray.400">@{screen_name}</Text>
-            </Flex>
+      <Flex as="ul" overflow="auto" flexDirection="column" flexGrow="1">
+        {loading ? (
+          <Flex height="100%" justifyContent="center" alignItems="center">
+            <Spinner />
           </Flex>
-        ))}
+        ) : (
+          users.map(({ id, profile_image_url, name, screen_name }) => (
+            <Flex key={id} borderBottom="1px" borderColor="gray.200" p="3">
+              <Avatar
+                mr="3"
+                name={name}
+                src={profile_image_url.replace("normal", "bigger")}
+              ></Avatar>
+              <Flex direction="column">
+                <Text>{name}</Text>
+                <Text color="gray.400">@{screen_name}</Text>
+              </Flex>
+            </Flex>
+          ))
+        )}
       </Flex>
     </Flex>
   );

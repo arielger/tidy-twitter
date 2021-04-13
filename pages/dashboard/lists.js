@@ -2,7 +2,7 @@ import Twit from "twit";
 import Cookies from "cookies";
 import { useState, useEffect } from "react";
 // import Head from "next/head";
-import { Heading, Text, Avatar, Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import { API_URL } from "../../utils/env-variables";
 
@@ -14,12 +14,22 @@ import FollowingLists from "../../components/FollowingList";
 
 export default function Home({ user, followers, lists }) {
   const [selectedListId, setSelectedListId] = useState();
+  const [loadingSelectedList, setLoadingSelectedList] = useState(false);
+  const [listMembers, setListMembers] = useState([]);
+
+  const selectedList = lists.find((list) => list.id === selectedListId);
 
   useEffect(() => {
     if (selectedListId) {
+      setLoadingSelectedList(true);
       fetch(`${API_URL}/list-members/${selectedListId}`)
         .then((response) => response.json())
-        .then((data) => console.log("data", data));
+        .then((data) => {
+          setListMembers(data);
+          setLoadingSelectedList(false);
+        });
+    } else {
+      setListMembers([]);
     }
   }, [selectedListId]);
 
@@ -32,8 +42,9 @@ export default function Home({ user, followers, lists }) {
         setSelectedListId={setSelectedListId}
       />
       <FollowingLists
-        users={followers}
-        selectedList={lists.find((list) => list.id === selectedListId)}
+        loading={loadingSelectedList}
+        users={selectedList ? listMembers : followers}
+        selectedList={selectedList}
       />
     </Flex>
   );
