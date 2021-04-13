@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 // import Head from "next/head";
 import { Heading, Text, Avatar, Box, Flex } from "@chakra-ui/react";
 
+import { API_URL } from "../../utils/env-variables";
+
 import Sidebar from "../../components/Sidebar";
 import ListsList from "../../components/ListsList";
 import FollowingLists from "../../components/FollowingList";
@@ -11,13 +13,14 @@ import FollowingLists from "../../components/FollowingList";
 // @TODO: Prevent showing dashboard if user is not logged in
 
 export default function Home({ user, followers, lists }) {
-  console.log("followers", followers);
-  console.log("lists", lists);
-
   const [selectedListId, setSelectedListId] = useState();
 
   useEffect(() => {
-    console.log("selectedListId", selectedListId);
+    if (selectedListId) {
+      fetch(`${API_URL}/list-members/${selectedListId}`)
+        .then((response) => response.json())
+        .then((data) => console.log("data", data));
+    }
   }, [selectedListId]);
 
   return (
@@ -117,8 +120,8 @@ export async function getServerSideProps({ req, res }) {
   );
 
   const lists = rawLists.data
-    .map(({ id, name, uri, mode, member_count, created_at }) => ({
-      id,
+    .map(({ id_str, name, uri, mode, member_count, created_at }) => ({
+      id: id_str, // Use id_str instead of id, which is returning wrong number
       name,
       uri,
       mode,

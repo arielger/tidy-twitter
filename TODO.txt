@@ -1,6 +1,8 @@
 [OK] Show real user data in Sidebar
-[ok] Add list of lists + style
+[OK] Add list of lists + style
     - Make list item selectable and save state of which one is selected
+[OK] Fix "Sorry that page does not exist" error when fetching list members
+[] Show members of selected list
 [] Style list of following
 [] Add checkbox to list of following
 [] Add logout button in sidebar
