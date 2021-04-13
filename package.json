@@ -19,5 +19,9 @@
     "react-dom": "17.0.1",
     "react-icons": "^4.2.0",
     "twittersignin": "^1.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-plugin-react": "^7.23.2"
   }
 }
