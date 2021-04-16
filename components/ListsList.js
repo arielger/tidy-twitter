@@ -6,17 +6,20 @@ import {
   Button,
   Box,
   Flex,
+  Icon,
   IconButton,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   BiDotsVerticalRounded,
   BiPencil,
   BiTrashAlt,
   BiLink,
+  BiListUl,
 } from "react-icons/bi";
 
 function getColorFromString(str, alpha = 1) {
@@ -37,10 +40,23 @@ const ColorCircle = styled.span`
   margin-top: 5px;
 `;
 
-// @TODO: Complete EmptyState
-function EmptyState() {}
+function EmptyState() {
+  return (
+    <Flex
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      height="100%"
+    >
+      <Icon as={BiListUl} w={8} h={8} mb={1} color="gray.500" />
+      <Text color="gray.500">You don't have any list</Text>
+    </Flex>
+  );
+}
 
 export default function ListsList({
+  loading,
+  error,
   lists,
   selectedListId,
   setSelectedListId,
@@ -66,66 +82,74 @@ export default function ListsList({
         <Button size="sm">Create</Button>
       </Flex>
       <Flex flexDirection="column" overflowY="auto" flexGrow="1">
-        {lists.map((list) => {
-          const listColor = getColorFromString(list.name);
-          const listHoverColor = getColorFromString(list.name, 0.3);
-          const isActive = list.id === selectedListId;
+        {loading ? (
+          <Flex height="100%" justifyContent="center" alignItems="center">
+            <Spinner />
+          </Flex>
+        ) : lists.length === 0 ? (
+          <EmptyState />
+        ) : (
+          lists.map((list) => {
+            const listColor = getColorFromString(list.name);
+            const listHoverColor = getColorFromString(list.name, 0.3);
+            const isActive = list.id === selectedListId;
 
-          return (
-            <Box position="relative" key={list.id}>
-              {/* Move menu outside list item to prevent <button> cannot appear as a descendant of <button> error */}
-              <Menu placement="right-start" preventOverflow={false}>
-                <MenuButton
-                  position="absolute"
-                  right="10px"
-                  top="10px"
-                  aria-label="List menu"
-                  as={IconButton}
-                  icon={<BiDotsVerticalRounded />}
-                  variant="ghost"
-                ></MenuButton>
-                {/* @TODO: Implement functionality */}
-                <MenuList>
-                  <MenuItem icon={<BiPencil />}>Rename</MenuItem>
-                  <MenuItem icon={<BiTrashAlt />}>Delete</MenuItem>
-                  <MenuItem icon={<BiLink />}>Open in Twiter</MenuItem>
-                </MenuList>
-              </Menu>
-              <Flex
-                as="button"
-                p="3"
-                w="100%"
-                borderBottom="1px"
-                borderColor="gray.200"
-                borderLeftWidth="4px"
-                _hover={{
-                  borderLeftColor: isActive ? listColor : listHoverColor,
-                }}
-                _focus={{
-                  boxShadow: "outline",
-                  outline: "none",
-                }}
-                _active={{
-                  borderLeftColor: listColor,
-                  outline: "none",
-                }}
-                borderLeftColor={isActive ? listColor : "transparent"}
-                textAlign="left"
-                onClick={() => {
-                  setSelectedListId(list.id);
-                }}
-              >
-                <ColorCircle color={listColor} />
-                <Box ml="3" flexGrow="1">
-                  <Heading size="sm" mb="1" wordBreak="break-word">
-                    {list.name}
-                  </Heading>
-                  <Text color="gray.500">{list.member_count} members</Text>
-                </Box>
-              </Flex>
-            </Box>
-          );
-        })}
+            return (
+              <Box position="relative" key={list.id}>
+                {/* Move menu outside list item to prevent <button> cannot appear as a descendant of <button> error */}
+                <Menu placement="right-start" preventOverflow={false}>
+                  <MenuButton
+                    position="absolute"
+                    right="10px"
+                    top="10px"
+                    aria-label="List menu"
+                    as={IconButton}
+                    icon={<BiDotsVerticalRounded />}
+                    variant="ghost"
+                  ></MenuButton>
+                  {/* @TODO: Implement functionality */}
+                  <MenuList>
+                    <MenuItem icon={<BiPencil />}>Rename</MenuItem>
+                    <MenuItem icon={<BiTrashAlt />}>Delete</MenuItem>
+                    <MenuItem icon={<BiLink />}>Open in Twiter</MenuItem>
+                  </MenuList>
+                </Menu>
+                <Flex
+                  as="button"
+                  p="3"
+                  w="100%"
+                  borderBottom="1px"
+                  borderColor="gray.200"
+                  borderLeftWidth="4px"
+                  _hover={{
+                    borderLeftColor: isActive ? listColor : listHoverColor,
+                  }}
+                  _focus={{
+                    boxShadow: "outline",
+                    outline: "none",
+                  }}
+                  _active={{
+                    borderLeftColor: listColor,
+                    outline: "none",
+                  }}
+                  borderLeftColor={isActive ? listColor : "transparent"}
+                  textAlign="left"
+                  onClick={() => {
+                    setSelectedListId(list.id);
+                  }}
+                >
+                  <ColorCircle color={listColor} />
+                  <Box ml="3" flexGrow="1">
+                    <Heading size="sm" mb="1" wordBreak="break-word">
+                      {list.name}
+                    </Heading>
+                    <Text color="gray.500">{list.member_count} members</Text>
+                  </Box>
+                </Flex>
+              </Box>
+            );
+          })
+        )}
       </Flex>
     </Flex>
   );

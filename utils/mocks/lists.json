@@ -1,0 +1,50 @@
+[
+    {
+      "id":"1321272866424455168",
+      "name":"art/visual",
+      "uri":"/arielger/lists/art-visual-47996",
+      "mode":"private",
+      "member_count":17,
+      "created_at":"Wed Oct 28 02:09:34 +0000 2020"
+    },
+    {
+      "id":"1321271759883128833",
+      "name":"cine",
+      "uri":"/arielger/lists/cine-10434",
+      "mode":"private",
+      "member_count":10,
+      "created_at":"Wed Oct 28 02:05:10 +0000 2020"
+    },
+    {
+      "id":"1321271637849812994",
+      "name":"tech",
+      "uri":"/arielger/lists/tech-37603",
+      "mode":"private",
+      "member_count":93,
+      "created_at":"Wed Oct 28 02:04:41 +0000 2020"
+    },
+    {
+      "id":"1321271506794696705",
+      "name":"personal",
+      "uri":"/arielger/lists/personal-48856",
+      "mode":"private",
+      "member_count":8,
+      "created_at":"Wed Oct 28 02:04:09 +0000 2020"
+    },
+    {
+      "id":"1321270954580942850",
+      "name":"politica",
+      "uri":"/arielger/lists/politica-64524",
+      "mode":"private",
+      "member_count":35,
+      "created_at":"Wed Oct 28 02:01:58 +0000 2020"
+    },
+    {
+      "id":"1321270715954462722",
+      "name":"musica",
+      "uri":"/arielger/lists/musica-11571",
+      "mode":"private",
+      "member_count":5,
+      "created_at":"Wed Oct 28 02:01:01 +0000 2020"
+    }
+  ]

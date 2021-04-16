@@ -14,14 +14,22 @@
     "cookies": "^0.8.0",
     "cors": "^2.8.5",
     "framer-motion": "^3.10.0",
+    "fuse.js": "^6.4.6",
     "next": "10.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-icons": "^4.2.0",
+    "react-query": "^3.13.9",
+    "throttle-debounce": "^3.0.1",
     "twittersignin": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "^7.24.0",
-    "eslint-plugin-react": "^7.23.2"
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "msw": "^0.28.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

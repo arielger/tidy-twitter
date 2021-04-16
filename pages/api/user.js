@@ -2,8 +2,6 @@ const Twit = require("twit");
 const Cookies = require("cookies");
 
 export default async function handler(req, res) {
-  console.log("LIST MEMBERS ENDPOINT");
-
   const cookies = new Cookies(req, res);
 
   const twitterAccessToken = cookies.get("twitterAccessToken");
@@ -20,12 +18,25 @@ export default async function handler(req, res) {
     strictSSL: true, // optional - requires SSL certificates to be valid.
   });
 
-  const { id: listId } = req.query;
+  // @TODO: Check how import all followers instead of the first 200
 
-  const rawMembers = await T.get("lists/members", {
-    list_id: listId,
-    count: 5000,
+  const rawUser = await T.get("account/verify_credentials", {
+    skip_status: true,
   });
 
-  res.json(rawMembers.data.users);
+  const user = (({
+    id,
+    name,
+    screen_name,
+    description,
+    profile_image_url,
+  }) => ({
+    id,
+    name,
+    screen_name,
+    description,
+    profile_image_url,
+  }))(rawUser.data);
+
+  res.json(user);
 }
