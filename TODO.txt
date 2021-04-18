@@ -5,8 +5,8 @@
 [OK] Move to react-query for fetching data
 [OK] Show members of selected list
 [OK] Move components to Typescript
-[] Move pages components to Typescript
-[] Move api to Typescript
+[OK] Move pages components to Typescript
+[OK] Move api to Typescript
 [] Add Prettier and rules to order imports
 [] Style list of following
 [] Add checkbox to list of following
