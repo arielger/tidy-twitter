@@ -19,16 +19,24 @@ import {
 } from "@chakra-ui/react";
 import { BiSearch } from "react-icons/bi";
 
+import { Friend, List } from "../types";
 import { addListMembers } from "../utils/api";
 import useFuse from "../hooks/useFuse";
+
+type props = {
+  friends: Friend[];
+  isVisible: boolean;
+  onClose: () => void;
+  selectedList?: List;
+};
 
 export default function AddMembersDrawer({
   friends,
   isVisible,
   onClose,
-  selectedList = {},
-}) {
-  const [selectedFriendsIds, setSelectedFriendsIds] = useState([]);
+  selectedList,
+}: props) {
+  const [selectedFriendsIds, setSelectedFriendsIds] = useState<number[]>([]);
 
   // @TODO: Add users to client side state when operation is successful
   const {
@@ -37,15 +45,22 @@ export default function AddMembersDrawer({
     mutate: addMembers,
   } = useMutation(addListMembers);
 
-  const { query, onSearch, results } = useFuse(friends, {
-    threshold: 0.4,
-    keys: ["name", "screen_name", "description"],
-    minMatchCharLength: 2,
-    ignoreLocation: true,
-  });
+  const {
+    query,
+    onSearch,
+    results,
+  }: { query: string; onSearch: () => void; results: Friend[] } = useFuse(
+    friends,
+    {
+      threshold: 0.4,
+      keys: ["name", "screen_name", "description"],
+      minMatchCharLength: 2,
+      ignoreLocation: true,
+    }
+  );
 
   const handleToggleFriend = useCallback(
-    (id, isChecked) => {
+    (id: number, isChecked: boolean) => {
       setSelectedFriendsIds(
         isChecked
           ? [...selectedFriendsIds, id]
@@ -56,13 +71,7 @@ export default function AddMembersDrawer({
   );
 
   return (
-    <Drawer
-      isOpen={isVisible}
-      placement="right"
-      onClose={onClose}
-      size="lg"
-      // finalFocusRef={btnRef}
-    >
+    <Drawer isOpen={isVisible} placement="right" onClose={onClose} size="lg">
       <DrawerOverlay>
         <DrawerContent>
           <DrawerCloseButton />
@@ -82,43 +91,37 @@ export default function AddMembersDrawer({
 
           <DrawerBody>
             {results &&
-              results.map(
-                ({ id, profile_image_url, name, screen_name, isSelected }) => (
-                  <Flex
-                    key={id}
-                    borderBottom="1px"
-                    borderColor="gray.200"
-                    py="3"
+              results.map(({ id, profile_image_url, name, screen_name }) => (
+                <Flex key={id} borderBottom="1px" borderColor="gray.200" py="3">
+                  <Checkbox
+                    isChecked={selectedFriendsIds.includes(id)}
+                    onChange={(e) => handleToggleFriend(id, e.target.checked)}
+                    spacing="1rem"
                   >
-                    <Checkbox
-                      isChecked={isSelected}
-                      onChange={(e) => handleToggleFriend(id, e.target.checked)}
-                      spacing="1rem"
-                    >
-                      <Flex>
-                        <Avatar
-                          mr="3"
-                          name={name}
-                          src={profile_image_url.replace("normal", "bigger")}
-                        ></Avatar>
-                        <Flex direction="column">
-                          <Text>{name}</Text>
-                          <Text color="gray.400">@{screen_name}</Text>
-                        </Flex>
+                    <Flex>
+                      <Avatar
+                        mr="3"
+                        name={name}
+                        src={profile_image_url.replace("normal", "bigger")}
+                      ></Avatar>
+                      <Flex direction="column">
+                        <Text>{name}</Text>
+                        <Text color="gray.400">@{screen_name}</Text>
                       </Flex>
-                    </Checkbox>
-                  </Flex>
-                )
-              )}
+                    </Flex>
+                  </Checkbox>
+                </Flex>
+              ))}
           </DrawerBody>
 
           <DrawerFooter>
             <Button
+              disabled={selectedFriendsIds.length === 0}
               isLoading={isLoadingAddingMembers}
               colorScheme="blue"
               onClick={() =>
                 addMembers({
-                  listId: selectedList.id,
+                  listId: selectedList?.id,
                   usersIds: selectedFriendsIds,
                 })
               }

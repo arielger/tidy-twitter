@@ -11,31 +11,41 @@ import {
 } from "@chakra-ui/react";
 import { BiGroup, BiUserPlus } from "react-icons/bi";
 
+import { Friend, List } from "../types";
+
+type props = {
+  loading: boolean;
+  error: boolean;
+  users: Friend[];
+  selectedList?: List;
+  handleAddMembers: () => void;
+};
+
 export default function FollowingList({
   loading,
   error,
   users,
   selectedList,
   handleAddMembers,
-}) {
+}: props) {
   return (
-    <Flex as="main" flexGrow="1" flexDirection="column">
+    <Flex as="main" flexGrow={1} flexDirection="column">
       <Flex
         h="24"
         px="4"
         alignItems="center"
         borderBottom="1px"
         borderColor="gray.200"
-        flexShrink="0"
+        flexShrink={0}
       >
         <Heading size="md" mr="8">
-          {selectedList && selectedList.name}
+          {selectedList?.name}
         </Heading>
         {Boolean(selectedList) && (
           <Box>
             <Icon as={BiGroup} mr="2"></Icon>
-            {selectedList.member_count}{" "}
-            {selectedList.member_count === 1 ? "member" : "members"}
+            {selectedList?.member_count}{" "}
+            {selectedList?.member_count === 1 ? "member" : "members"}
           </Box>
         )}
         {!!selectedList && (
@@ -48,7 +58,7 @@ export default function FollowingList({
           </Button>
         )}
       </Flex>
-      <Flex as="ul" overflow="auto" flexDirection="column" flexGrow="1">
+      <Flex as="ul" overflow="auto" flexDirection="column" flexGrow={1}>
         {!selectedList ? (
           <Flex
             flexDirection="column"

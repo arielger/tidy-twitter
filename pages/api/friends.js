@@ -33,7 +33,6 @@ export default async function handler(req, res) {
       url,
       followers_count,
       friends_count,
-      created_at,
       statuses_count,
       profile_image_url,
     }) => ({
@@ -44,7 +43,6 @@ export default async function handler(req, res) {
       url,
       followers_count,
       friends_count,
-      created_at,
       statuses_count,
       profile_image_url,
     })

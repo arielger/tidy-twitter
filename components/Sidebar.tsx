@@ -14,7 +14,13 @@ import { FaTwitter } from "react-icons/fa";
 
 import ActiveNextLink from "./ActiveNextLink";
 
-export default function Sidebar({ user }) {
+import { User } from "../types";
+
+type props = {
+  user: User;
+};
+
+export default function Sidebar({ user }: props) {
   return (
     <Box
       w="72"
@@ -58,7 +64,7 @@ export default function Sidebar({ user }) {
             Following
           </Link>
         </ActiveNextLink> */}
-        <ActiveNextLink href="/dashboard/lists" passHref>
+        <ActiveNextLink href="/dashboard/lists">
           <Link
             p="2"
             borderRadius="md"

@@ -4,7 +4,7 @@ import { Flex, useDisclosure, Spinner } from "@chakra-ui/react";
 
 import Sidebar from "../../components/Sidebar";
 import ListsList from "../../components/ListsList";
-import FollowingLists from "../../components/FollowingList";
+import FollowingList from "../../components/FollowingList";
 import AddMembersDrawer from "../../components/AddMembersDrawer";
 
 import {
@@ -76,7 +76,7 @@ export default function Home() {
         selectedListId={selectedListId}
         setSelectedListId={setSelectedListId}
       />
-      <FollowingLists
+      <FollowingList
         loading={isLoadingListMembers}
         error={errorFetchingListMembers}
         users={listMembers}

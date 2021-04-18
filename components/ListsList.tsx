@@ -22,7 +22,9 @@ import {
   BiListUl,
 } from "react-icons/bi";
 
-function getColorFromString(str, alpha = 1) {
+import { List } from "../types";
+
+function getColorFromString(str: string, alpha = 1) {
   let hash = 0;
   for (var i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -54,13 +56,21 @@ function EmptyState() {
   );
 }
 
+type props = {
+  loading: boolean;
+  error: boolean;
+  lists: List[];
+  selectedListId?: string;
+  setSelectedListId: (id: string) => void;
+};
+
 export default function ListsList({
   loading,
   error,
   lists,
   selectedListId,
   setSelectedListId,
-}) {
+}: props) {
   return (
     <Flex
       width="xs"
@@ -76,12 +86,12 @@ export default function ListsList({
         px="3"
         borderBottom="1px"
         borderColor="gray.200"
-        flexShrink="0"
+        flexShrink={0}
       >
         <Heading size="md">Lists</Heading>
         <Button size="sm">Create</Button>
       </Flex>
-      <Flex flexDirection="column" overflowY="auto" flexGrow="1">
+      <Flex flexDirection="column" overflowY="auto" flexGrow={1}>
         {loading ? (
           <Flex height="100%" justifyContent="center" alignItems="center">
             <Spinner />
@@ -139,7 +149,7 @@ export default function ListsList({
                   }}
                 >
                   <ColorCircle color={listColor} />
-                  <Box ml="3" flexGrow="1">
+                  <Box ml="3" flexGrow={1}>
                     <Heading size="sm" mb="1" wordBreak="break-word">
                       {list.name}
                     </Heading>
