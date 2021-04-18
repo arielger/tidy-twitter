@@ -22,15 +22,18 @@ import { BiSearch } from "react-icons/bi";
 import { Friend, List } from "../types";
 import { addListMembers } from "../utils/api";
 import useFuse from "../hooks/useFuse";
+import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 type props = {
-  friends: Friend[];
+  isLoadingFriends: boolean;
+  friends?: Friend[];
   isVisible: boolean;
   onClose: () => void;
-  selectedList?: List;
+  selectedList: List;
 };
 
 export default function AddMembersDrawer({
+  isLoadingFriends,
   friends,
   isVisible,
   onClose,
@@ -90,7 +93,10 @@ export default function AddMembersDrawer({
           </DrawerHeader>
 
           <DrawerBody>
-            {results &&
+            {isLoadingFriends ? (
+              <Text>Loading users...</Text>
+            ) : (
+              results &&
               results.map(({ id, profile_image_url, name, screen_name }) => (
                 <Flex key={id} borderBottom="1px" borderColor="gray.200" py="3">
                   <Checkbox
@@ -111,7 +117,8 @@ export default function AddMembersDrawer({
                     </Flex>
                   </Checkbox>
                 </Flex>
-              ))}
+              ))
+            )}
           </DrawerBody>
 
           <DrawerFooter>
@@ -121,7 +128,7 @@ export default function AddMembersDrawer({
               colorScheme="blue"
               onClick={() =>
                 addMembers({
-                  listId: selectedList?.id,
+                  listId: selectedList.id,
                   usersIds: selectedFriendsIds,
                 })
               }

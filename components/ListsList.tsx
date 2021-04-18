@@ -59,7 +59,7 @@ function EmptyState() {
 type props = {
   loading: boolean;
   error: boolean;
-  lists: List[];
+  lists?: List[];
   selectedListId?: string;
   setSelectedListId: (id: string) => void;
 };
@@ -92,7 +92,7 @@ export default function ListsList({
         <Button size="sm">Create</Button>
       </Flex>
       <Flex flexDirection="column" overflowY="auto" flexGrow={1}>
-        {loading ? (
+        {loading || !lists ? (
           <Flex height="100%" justifyContent="center" alignItems="center">
             <Spinner />
           </Flex>

@@ -39,7 +39,7 @@ export default function Home() {
     isError: errorFetchingLists,
     data: lists,
   } = useQuery("lists", fetchLists);
-  const [selectedListId, setSelectedListId] = useState();
+  const [selectedListId, setSelectedListId] = useState<string>();
   const selectedList =
     lists && lists.find((list) => list.id === selectedListId);
 
@@ -49,7 +49,7 @@ export default function Home() {
     data: listMembers,
   } = useQuery(
     `list.members.${selectedListId}`,
-    () => fetchListMembers(selectedListId),
+    () => fetchListMembers(selectedListId!),
     {
       enabled: !!selectedListId,
       staleTime: Infinity, // Data will not be considered stale
@@ -68,7 +68,8 @@ export default function Home() {
 
   return (
     <Flex height="100vh" flexDir="row" overflow="hidden">
-      <Sidebar user={user} />
+      {/* Use TS non-null assertion operator */}
+      <Sidebar user={user!} />
       <ListsList
         loading={isLoadingLists}
         error={errorFetchingLists}
@@ -83,12 +84,15 @@ export default function Home() {
         selectedList={selectedList}
         handleAddMembers={onAddMembersOpen}
       />
-      <AddMembersDrawer
-        friends={friends}
-        isVisible={isAddMembersOpen}
-        onClose={onAddMembersClose}
-        selectedList={selectedList}
-      />
+      {selectedList && (
+        <AddMembersDrawer
+          isLoadingFriends={isLoadingFriends}
+          friends={friends}
+          isVisible={isAddMembersOpen}
+          onClose={onAddMembersClose}
+          selectedList={selectedList}
+        />
+      )}
     </Flex>
   );
 }

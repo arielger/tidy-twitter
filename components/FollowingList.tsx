@@ -16,7 +16,7 @@ import { Friend, List } from "../types";
 type props = {
   loading: boolean;
   error: boolean;
-  users: Friend[];
+  users?: Friend[];
   selectedList?: List;
   handleAddMembers: () => void;
 };

@@ -1,22 +1,17 @@
-import { useState } from "react";
 import Head from "next/head";
 import { Heading, Text, Button, Box, Flex } from "@chakra-ui/react";
+import { useMutation } from "react-query";
 
-import { API_URL } from "../utils/env-variables";
+import { fetchTwitterRequestToken } from "../utils/api";
 
 export default function Home() {
-  const [isAuthLoading, setIsAuthLoading] = useState(false);
-
-  const logInWithTwitter = () => {
-    setIsAuthLoading(true);
-    fetch(`${API_URL}/twitter-login`)
-      .then((response) => response.json())
-      .then(({ requestToken }) => {
-        setIsAuthLoading(false);
+  const fetchTokenMutation = useMutation(() =>
+    fetchTwitterRequestToken().then(
+      ({ requestToken }: { requestToken: string }) => {
         window.location.href = `https://api.twitter.com/oauth/authorize?oauth_token=${requestToken}`;
-      });
-    // @TODO: Handle error
-  };
+      }
+    )
+  );
 
   return (
     <div>
@@ -43,8 +38,8 @@ export default function Home() {
             breeze.
           </Text>
           <Button
-            onClick={logInWithTwitter}
-            isLoading={isAuthLoading}
+            onClick={() => fetchTokenMutation.mutate()}
+            isLoading={fetchTokenMutation.isLoading}
             loadingText="Connecting with Twitter"
             size="lg"
             colorScheme="twitter"
