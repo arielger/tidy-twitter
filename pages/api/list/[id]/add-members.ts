@@ -13,12 +13,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Response>
 ) {
-  const T = twitSetup(req, res);
-
-  const { id: listId } = req.query;
-  const { user_id } = JSON.parse(req.body);
-
   try {
+    const T = twitSetup(req, res);
+
+    const { id: listId } = req.query;
+    const { user_id } = JSON.parse(req.body);
+
     const result = await T.post("lists/members/create_all", {
       list_id: listId as string,
       user_id: user_id,

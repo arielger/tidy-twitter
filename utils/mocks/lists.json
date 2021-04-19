@@ -46,5 +46,13 @@
       "mode":"private",
       "member_count":5,
       "created_at":"Wed Oct 28 02:01:01 +0000 2020"
+    },
+    {
+      "id":"1382019521909772293",
+      "name":"test",
+      "uri":"/arielger/lists/test",
+      "mode":"private",
+      "member_count":99,
+      "created_at":"Wed Oct 28 02:01:01 +0000 2020"
     }
   ]

@@ -1,5 +1,5 @@
 export type Friend = {
-  id: number;
+  id: string;
   name: string;
   screen_name: string;
   description: string;

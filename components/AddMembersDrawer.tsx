@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   InputGroup,
   InputLeftElement,
@@ -22,7 +22,6 @@ import { BiSearch } from "react-icons/bi";
 import { Friend, List } from "../types";
 import { addListMembers } from "../utils/api";
 import useFuse from "../hooks/useFuse";
-import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 type props = {
   isLoadingFriends: boolean;
@@ -32,6 +31,8 @@ type props = {
   selectedList: List;
 };
 
+//@TODO: Remove friends already on the list from results
+
 export default function AddMembersDrawer({
   isLoadingFriends,
   friends,
@@ -39,14 +40,33 @@ export default function AddMembersDrawer({
   onClose,
   selectedList,
 }: props) {
-  const [selectedFriendsIds, setSelectedFriendsIds] = useState<number[]>([]);
+  const queryClient = useQueryClient();
 
-  // @TODO: Add users to client side state when operation is successful
+  const [selectedFriendsIds, setSelectedFriendsIds] = useState<string[]>([]);
+
   const {
     isLoading: isLoadingAddingMembers,
     isError: errorAddingMembers,
     mutate: addMembers,
-  } = useMutation(addListMembers);
+  } = useMutation(addListMembers, {
+    // Update selected list with newly added members
+    onSuccess: (_, { listId, usersIds }) => {
+      queryClient.setQueryData<Friend[]>(
+        ["list", "members", listId],
+        (oldListMembers) => {
+          // Not sure if type casting is the best solution here
+          const newMembers = usersIds.map((userId) =>
+            (friends as Friend[]).find((friend) => friend.id === userId)
+          );
+
+          return [
+            ...(oldListMembers ? oldListMembers : []),
+            ...newMembers,
+          ] as Friend[];
+        }
+      );
+    },
+  });
 
   const {
     query,
@@ -63,7 +83,7 @@ export default function AddMembersDrawer({
   );
 
   const handleToggleFriend = useCallback(
-    (id: number, isChecked: boolean) => {
+    (id: string, isChecked: boolean) => {
       setSelectedFriendsIds(
         isChecked
           ? [...selectedFriendsIds, id]

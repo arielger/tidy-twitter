@@ -48,7 +48,7 @@ export default function Home() {
     isError: errorFetchingListMembers,
     data: listMembers,
   } = useQuery(
-    `list.members.${selectedListId}`,
+    ["list", "members", selectedListId],
     () => fetchListMembers(selectedListId!),
     {
       enabled: !!selectedListId,

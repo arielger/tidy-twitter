@@ -5,8 +5,12 @@ import { Friend } from "../../types";
 
 type Response = Friend[] | "ERROR";
 
-type TwitterListResponse = {
-  data: { users: Friend[] };
+type TwitterApiFriend = Friend & {
+  id_str: string;
+};
+
+type TwitterFriendsResponse = {
+  data: { users: TwitterApiFriend[] };
 };
 
 export default async function handler(
@@ -19,11 +23,11 @@ export default async function handler(
     // @TODO: Check how import all followers instead of the first 200
     const rawFriends = (await T.get("friends/list", {
       count: 200, // max count
-    })) as TwitterListResponse;
+    })) as TwitterFriendsResponse;
 
     const friends = rawFriends.data.users.map(
       ({
-        id,
+        id_str,
         name,
         screen_name,
         description,
@@ -33,7 +37,7 @@ export default async function handler(
         statuses_count,
         profile_image_url,
       }) => ({
-        id,
+        id: id_str,
         name,
         screen_name,
         description,

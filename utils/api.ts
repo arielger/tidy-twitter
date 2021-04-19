@@ -31,12 +31,12 @@ export const addListMembers = ({
   usersIds,
 }: {
   listId: string;
-  usersIds: number[];
+  usersIds: string[];
 }) => {
   return fetch(`${API_URL}/list/${listId}/add-members`, {
     method: "post",
     body: JSON.stringify({
       user_id: usersIds.join(","),
     }),
-  }).then((response) => response.json());
+  });
 };
