@@ -47,23 +47,6 @@ export default function Sidebar({ user }: props) {
         </Flex>
       </Flex>
       <VStack alignItems="stretch" spacing="2">
-        {/* @TODO: Show lists link when screen is ready */}
-        {/* <ActiveNextLink href="/dashboard/following" passHref>
-          <Link
-            p="2"
-            borderRadius="md"
-            backgroundColor="gray.200"
-            display="flex"
-            alignItems="center"
-            _hover={{
-              backgroundColor: "gray.200",
-              textDecoration: "none",
-            }}
-          >
-            <Icon as={BiGroup} mr="2" boxSize="6" color="gray.500"></Icon>
-            Following
-          </Link>
-        </ActiveNextLink> */}
         <ActiveNextLink href="/dashboard/lists">
           <Link
             p="2"

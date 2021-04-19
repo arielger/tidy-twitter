@@ -62,6 +62,7 @@ type props = {
   lists?: List[];
   selectedListId?: string;
   setSelectedListId: (id: string) => void;
+  handleCreateList: () => void;
 };
 
 export default function ListsList({
@@ -70,6 +71,7 @@ export default function ListsList({
   lists,
   selectedListId,
   setSelectedListId,
+  handleCreateList,
 }: props) {
   return (
     <Flex
@@ -89,7 +91,9 @@ export default function ListsList({
         flexShrink={0}
       >
         <Heading size="md">Lists</Heading>
-        <Button size="sm">Create</Button>
+        <Button onClick={handleCreateList} size="sm">
+          Create
+        </Button>
       </Flex>
       <Flex flexDirection="column" overflowY="auto" flexGrow={1}>
         {loading || !lists ? (

@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import ListsList from "../../components/ListsList";
 import FollowingList from "../../components/FollowingList";
 import AddMembersDrawer from "../../components/AddMembersDrawer";
+import NewListModal from "../../components/NewListModal";
 
 import {
   fetchUser,
@@ -21,6 +22,12 @@ export default function Home() {
     isOpen: isAddMembersOpen,
     onOpen: onAddMembersOpen,
     onClose: onAddMembersClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isCreateListOpen,
+    onOpen: onCreateListOpen,
+    onClose: onCreateListClose,
   } = useDisclosure();
 
   const {
@@ -84,6 +91,7 @@ export default function Home() {
         lists={lists}
         selectedListId={selectedListId}
         setSelectedListId={setSelectedListId}
+        handleCreateList={onCreateListOpen}
       />
       <FollowingList
         loading={isLoadingListMembers}
@@ -102,6 +110,7 @@ export default function Home() {
           selectedList={selectedList}
         />
       )}
+      <NewListModal isOpen={isCreateListOpen} onClose={onCreateListClose} />
     </Flex>
   );
 }

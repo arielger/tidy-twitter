@@ -7,6 +7,7 @@
 [OK] Move components to Typescript
 [OK] Move pages components to Typescript
 [OK] Move api to Typescript
+[OK] Add create list modal
 [] Add Prettier and rules to order imports
 [] Style list of following
 [] Add checkbox to list of following
