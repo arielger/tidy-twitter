@@ -16,6 +16,7 @@ import {
   Avatar,
   Text,
   Checkbox,
+  useToast,
 } from "@chakra-ui/react";
 import { BiSearch } from "react-icons/bi";
 
@@ -26,21 +27,22 @@ import useFuse from "../hooks/useFuse";
 type props = {
   isLoadingFriends: boolean;
   friends?: Friend[];
+  membersToAdd?: Friend[];
   isVisible: boolean;
   onClose: () => void;
   selectedList: List;
 };
 
-//@TODO: Remove friends already on the list from results
-
 export default function AddMembersDrawer({
   isLoadingFriends,
   friends,
+  membersToAdd,
   isVisible,
   onClose,
   selectedList,
 }: props) {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   const [selectedFriendsIds, setSelectedFriendsIds] = useState<string[]>([]);
 
@@ -51,6 +53,17 @@ export default function AddMembersDrawer({
   } = useMutation(addListMembers, {
     // Update selected list with newly added members
     onSuccess: (_, { listId, usersIds }) => {
+      setSelectedFriendsIds([]);
+
+      toast({
+        title: "Members added",
+        description: `${usersIds.length} user${
+          usersIds.length > 1 ? "s were" : " was"
+        } added to the ${selectedList.name} list.`,
+        status: "success",
+        isClosable: true,
+      });
+
       queryClient.setQueryData<Friend[]>(
         ["list", "members", listId],
         (oldListMembers) => {
@@ -73,7 +86,7 @@ export default function AddMembersDrawer({
     onSearch,
     results,
   }: { query: string; onSearch: () => void; results: Friend[] } = useFuse(
-    friends,
+    membersToAdd,
     {
       threshold: 0.4,
       keys: ["name", "screen_name", "description"],

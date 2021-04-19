@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "react-query";
 import { Flex, useDisclosure, Spinner } from "@chakra-ui/react";
 
@@ -56,6 +56,14 @@ export default function Home() {
     }
   );
 
+  const membersToAdd = useMemo(() => {
+    const listMembersIds = (listMembers || []).map((user) => user.id);
+    return friends?.filter(
+      (friend) =>
+        !listMembersIds?.find((listMemberId) => listMemberId === friend.id)
+    );
+  }, [listMembers, friends]);
+
   const isLoadingPage = isLoadingUser;
 
   if (isLoadingPage) {
@@ -86,8 +94,9 @@ export default function Home() {
       />
       {selectedList && (
         <AddMembersDrawer
-          isLoadingFriends={isLoadingFriends}
           friends={friends}
+          isLoadingFriends={isLoadingFriends}
+          membersToAdd={membersToAdd}
           isVisible={isAddMembersOpen}
           onClose={onAddMembersClose}
           selectedList={selectedList}
