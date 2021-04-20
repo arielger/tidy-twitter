@@ -19,5 +19,9 @@ export const handlers = [
     // const { listId } = req.params;
     return res(ctx.status(200), ctx.json(listMembersMock));
   }),
+  rest.post("/api/list/create", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(listsMock[0]));
+  }),
+
   // @TODO: Add add members to list handler
 ];

@@ -24,6 +24,7 @@ import { createList } from "../utils/api";
 type props = {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit?: (formState: any) => void; // Only used for tests
 };
 
 const defaultFormState = {
@@ -32,7 +33,9 @@ const defaultFormState = {
   isPrivate: false,
 };
 
-export default function NewListModal({ isOpen, onClose }: props) {
+// @TODO: Handle error with API request
+
+export default function NewListModal({ isOpen, onClose, onSubmit }: props) {
   const queryClient = useQueryClient();
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
@@ -54,6 +57,7 @@ export default function NewListModal({ isOpen, onClose }: props) {
     setIsFormSubmitted(true);
     if (formState.name === "") return;
 
+    onSubmit && onSubmit(formState);
     createListMutation.mutate(formState);
   };
 
