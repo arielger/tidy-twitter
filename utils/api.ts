@@ -9,7 +9,7 @@ function handleErrors(response: Response) {
   return response;
 }
 
-export function fetchTwitterRequestToken(): Promise<string> {
+export function fetchTwitterRequestToken(): Promise<{ requestToken: string }> {
   return fetch(`${API_URL}/twitter-login`)
     .then(handleErrors)
     .then((response) => response.json());

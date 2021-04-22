@@ -1,14 +1,20 @@
-const protocol = ["development", "test"].includes(process.env.NODE_ENV)
-  ? "http"
-  : "https";
+const config = {
+  production: {
+    protocol: "https",
+    siteUrl: "tidy-twitter.vercel.app",
+  },
+  preview: {
+    protocol: "https",
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+  },
+  development: {
+    protocol: "http",
+    siteUrl: "localhost:3000",
+  },
+}[process.env.VERCEL_ENV || "development"];
 
-const siteUrl =
-  process.env.VERCEL_ENV === "production"
-    ? "tidy-twitter.vercel.app"
-    : process.env.NEXT_PUBLIC_SITE_URL;
-
-const SITE_URL = `${protocol}://${siteUrl}`;
-const API_URL = `/api`;
+const SITE_URL = `${config.protocol}://${config.siteUrl}`;
+const API_URL = `${config.protocol}://${config.siteUrl}/api`;
 
 module.exports = {
   SITE_URL,

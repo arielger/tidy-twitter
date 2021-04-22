@@ -6,11 +6,9 @@ import { fetchTwitterRequestToken } from "../utils/api";
 
 export default function Home() {
   const fetchTokenMutation = useMutation(() =>
-    fetchTwitterRequestToken().then(
-      ({ requestToken }: { requestToken: string }) => {
-        window.location.href = `https://api.twitter.com/oauth/authorize?oauth_token=${requestToken}`;
-      }
-    )
+    fetchTwitterRequestToken().then(({ requestToken }) => {
+      window.location.href = `https://api.twitter.com/oauth/authorize?oauth_token=${requestToken}`;
+    })
   );
 
   return (
