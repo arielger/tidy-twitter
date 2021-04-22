@@ -1,4 +1,5 @@
 import React from "react";
+import { useMutation, useQueryClient, useQuery } from "react-query";
 import {
   Box,
   Flex,
@@ -8,26 +9,105 @@ import {
   Icon,
   Button,
   Spinner,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
-import { BiGroup, BiUserPlus } from "react-icons/bi";
+import { BiGroup, BiUserPlus, BiUserMinus } from "react-icons/bi";
 
+import { fetchListMembers, removeListMember } from "../utils/api";
 import { Friend, List } from "../types";
 
+function FollowingMember({
+  user,
+  selectedList,
+}: {
+  user: Friend;
+  selectedList: List;
+}) {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const removeFromList = useMutation(removeListMember, {
+    onSuccess: (_, { userId: removedUserId }) => {
+      queryClient.setQueryData<Friend[]>(
+        ["list", "members", selectedList.id],
+        (listMembers) =>
+          (listMembers || []).filter((member) => member.id !== removedUserId)
+      );
+      queryClient.setQueryData<List[]>("lists", (lists) =>
+        (lists || []).map((list) =>
+          list.id === selectedList.id
+            ? {
+                ...list,
+                member_count: list.member_count - 1,
+              }
+            : list
+        )
+      );
+
+      toast({
+        title: "Member removed",
+        description: `The user ${user.name} was removed from ${selectedList.name}`,
+        status: "success",
+        isClosable: true,
+      });
+    },
+  });
+
+  return (
+    <Flex
+      key={user.id}
+      borderBottom="1px"
+      borderColor="gray.200"
+      p="3"
+      data-testid={`following-list-member-${user.id}`}
+    >
+      <Avatar
+        mr="3"
+        name={user.name}
+        src={user.profile_image_url.replace("normal", "bigger")}
+      ></Avatar>
+      <Flex direction="column">
+        <Text>{user.name}</Text>
+        <Text color="gray.400">@{user.screen_name}</Text>
+      </Flex>
+      <IconButton
+        isLoading={removeFromList.isLoading}
+        onClick={() =>
+          removeFromList.mutate({
+            listId: selectedList.id,
+            userId: user.id,
+          })
+        }
+        ml="auto"
+        title="Remove from list"
+        aria-label="Remove from list"
+        icon={<BiUserMinus />}
+        colorScheme="red"
+        variant="outline"
+      />
+    </Flex>
+  );
+}
+
 type props = {
-  loading: boolean;
-  error: boolean;
-  users?: Friend[];
   selectedList?: List;
   handleAddMembers: () => void;
 };
 
 export default function FollowingList({
-  loading,
-  error,
-  users,
   selectedList,
   handleAddMembers,
 }: props) {
+  const { isLoading, isError, data: users } = useQuery(
+    ["list", "members", selectedList?.id],
+    () => fetchListMembers(selectedList?.id!),
+    {
+      enabled: !!selectedList?.id,
+      staleTime: Infinity, // Data will not be considered stale
+    }
+  );
+
   return (
     <Flex as="main" flexGrow={1} flexDirection="column">
       <Flex
@@ -69,24 +149,18 @@ export default function FollowingList({
             <Icon as={BiGroup} w={8} h={8} mb={1} color="gray.500" />
             <Text color="gray.500">Select a list to see the members</Text>
           </Flex>
-        ) : loading ? (
+        ) : isLoading ? (
           <Flex height="100%" justifyContent="center" alignItems="center">
             <Spinner />
           </Flex>
         ) : (
           users &&
-          users.map(({ id, profile_image_url, name, screen_name }) => (
-            <Flex key={id} borderBottom="1px" borderColor="gray.200" p="3">
-              <Avatar
-                mr="3"
-                name={name}
-                src={profile_image_url.replace("normal", "bigger")}
-              ></Avatar>
-              <Flex direction="column">
-                <Text>{name}</Text>
-                <Text color="gray.400">@{screen_name}</Text>
-              </Flex>
-            </Flex>
+          users.map((user) => (
+            <FollowingMember
+              key={user.id}
+              user={user}
+              selectedList={selectedList}
+            />
           ))
         )}
       </Flex>

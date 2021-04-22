@@ -1,4 +1,6 @@
-const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+const protocol = ["development", "test"].includes(process.env.NODE_ENV)
+  ? "http"
+  : "https";
 
 const siteUrl =
   process.env.VERCEL_ENV === "production"

@@ -6,22 +6,24 @@ import listsMock from "./lists.json";
 import listMembersMock from "./list-members.json";
 
 export const handlers = [
-  rest.get("/api/user", (req, res, ctx) => {
+  rest.get("*/api/user", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(userMock));
   }),
-  rest.get("/api/friends", (req, res, ctx) => {
+  rest.get("*/api/friends", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(friendsMock));
   }),
-  rest.get("/api/list", (req, res, ctx) => {
+  rest.get("*/api/list", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(listsMock));
   }),
-  rest.get("/api/list/:listId/get-members", (req, res, ctx) => {
+  rest.get("*/api/list/:listId/get-members", (req, res, ctx) => {
     // const { listId } = req.params;
     return res(ctx.status(200), ctx.json(listMembersMock));
   }),
-  rest.post("/api/list/create", (req, res, ctx) => {
+  rest.post("*/api/list/create", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(listsMock[0]));
   }),
-
+  rest.post("*/api/list/:listId/remove-member", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.text("OK"));
+  }),
   // @TODO: Add add members to list handler
 ];

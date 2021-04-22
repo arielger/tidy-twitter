@@ -1,4 +1,6 @@
 import "@testing-library/jest-dom";
+import "whatwg-fetch";
+import { loadEnvConfig } from "@next/env";
 
-require("./utils/mocks/server");
-require("whatwg-fetch");
+const projectDir = process.cwd();
+loadEnvConfig(projectDir);

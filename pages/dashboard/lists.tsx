@@ -50,16 +50,13 @@ export default function Home() {
   const selectedList =
     lists && lists.find((list) => list.id === selectedListId);
 
-  const {
-    isLoading: isLoadingListMembers,
-    isError: errorFetchingListMembers,
-    data: listMembers,
-  } = useQuery(
+  // @TODO: Review if repeating the query is the best solution here
+  // Best way to approach tests for react-query
+  const { data: listMembers } = useQuery(
     ["list", "members", selectedListId],
     () => fetchListMembers(selectedListId!),
     {
-      enabled: !!selectedListId,
-      staleTime: Infinity, // Data will not be considered stale
+      enabled: false,
     }
   );
 
@@ -94,9 +91,6 @@ export default function Home() {
         handleCreateList={onCreateListOpen}
       />
       <FollowingList
-        loading={isLoadingListMembers}
-        error={errorFetchingListMembers}
-        users={listMembers}
         selectedList={selectedList}
         handleAddMembers={onAddMembersOpen}
       />
