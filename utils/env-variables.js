@@ -5,13 +5,13 @@ const config = {
   },
   preview: {
     protocol: "https",
-    siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+    siteUrl: process.env.NEXT_PUBLIC_VERCEL_URL,
   },
   development: {
     protocol: "http",
     siteUrl: "localhost:3000",
   },
-}[process.env.VERCEL_ENV || "development"];
+}[process.env.NEXT_PUBLIC_VERCEL_ENV || "development"];
 
 const SITE_URL = `${config.protocol}://${config.siteUrl}`;
 const API_URL = `${config.protocol}://${config.siteUrl}/api`;
