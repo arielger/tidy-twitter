@@ -8,7 +8,7 @@ const siteUrl =
     : process.env.NEXT_PUBLIC_SITE_URL;
 
 const SITE_URL = `${protocol}://${siteUrl}`;
-const API_URL = `${protocol}://${siteUrl}/api`;
+const API_URL = `/api`;
 
 module.exports = {
   SITE_URL,

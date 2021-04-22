@@ -13,7 +13,7 @@ const queryClient = new QueryClient({
   },
 });
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NEXT_PUBLIC_ENABLE_API_MOCKS === "true") {
   require("../utils/mocks/setup");
 }
 
