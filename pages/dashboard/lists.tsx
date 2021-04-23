@@ -15,8 +15,6 @@ import {
   fetchListMembers,
 } from "../../utils/api";
 
-// @TODO: Prevent showing dashboard if user is not logged in
-
 export default function Home() {
   const {
     isOpen: isAddMembersOpen,

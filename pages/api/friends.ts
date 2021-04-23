@@ -20,7 +20,6 @@ export default async function handler(
   const T = twitSetup(req, res);
 
   try {
-    // @TODO: Check how import all followers instead of the first 200
     const rawFriends = (await T.get("friends/list", {
       count: 200, // max count
     })) as TwitterFriendsResponse;

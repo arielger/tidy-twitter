@@ -8,8 +8,6 @@ export function twitSetup(req: NextApiRequest, res: NextApiResponse): Twit {
   const twitterAccessToken = cookies.get("twitterAccessToken");
   const twitterAccessTokenSecret = cookies.get("twitterAccessTokenSecret");
 
-  // @TODO: Check how to redirect from endpoint if user is not logged in to twitter
-
   return new Twit({
     consumer_key: process.env.TWITTER_CONSUMER_KEY!,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET!,

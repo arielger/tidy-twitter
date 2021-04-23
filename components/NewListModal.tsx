@@ -33,8 +33,6 @@ const defaultFormState = {
   isPrivate: false,
 };
 
-// @TODO: Handle error with API request
-
 export default function NewListModal({ isOpen, onClose, onSubmit }: props) {
   const queryClient = useQueryClient();
 

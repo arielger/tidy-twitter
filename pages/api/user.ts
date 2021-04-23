@@ -20,8 +20,6 @@ export default async function handler(
       skip_status: true,
     })) as TwitterListResponse;
 
-    // @TODO: Review if we should we use id_str here?
-
     const user = (({
       id,
       name,

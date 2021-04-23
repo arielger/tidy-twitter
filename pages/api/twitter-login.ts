@@ -35,7 +35,6 @@ export default async function handler(
 
     res.json({ requestToken });
   } catch (e) {
-    console.log("e", e);
     res.status(400).send("ERROR");
   }
 }

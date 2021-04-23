@@ -25,5 +25,4 @@ export const handlers = [
   rest.post("*/api/list/:listId/remove-member", (req, res, ctx) => {
     return res(ctx.status(200), ctx.text("OK"));
   }),
-  // @TODO: Add add members to list handler
 ];
