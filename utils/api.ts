@@ -51,6 +51,12 @@ export function createList(list: {
     .then((response) => response.json());
 }
 
+export function deleteList(listId: string) {
+  return fetch(`/api/list/${listId}`, {
+    method: "delete",
+  }).then(handleErrors);
+}
+
 // List members
 
 export function fetchListMembers(listId: string): Promise<Friend[]> {

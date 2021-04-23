@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { Flex, useDisclosure, Spinner } from "@chakra-ui/react";
 
 import Sidebar from "../../components/Sidebar";
-import ListsList from "../../components/ListsList";
+import ListsList from "../../components/ListsList/ListsList";
 import FollowingList from "../../components/FollowingList";
 import AddMembersDrawer from "../../components/AddMembersDrawer";
 import NewListModal from "../../components/NewListModal";
