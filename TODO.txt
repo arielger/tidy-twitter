@@ -9,10 +9,11 @@
 [OK] Move api to Typescript
 [OK] Add create list modal
 [OK] Add Delete user from list (w/ tests)
-[] Fix deploy w/ vercel
+[OK] Fix deploy w/ vercel
 [] Change member_count when adding members to a list
 [] Fix repeated map for lists of members (add types)
 [] Add Prettier and rules to order imports
 [] Style list of following
 [] Add checkbox to list of following
 [] Add logout button in sidebar
+[] Fix API requests in vercel preview links

@@ -78,6 +78,19 @@ export default function AddMembersDrawer({
           ] as Friend[];
         }
       );
+
+      queryClient.setQueryData<List[]>("lists", (lists) =>
+        (lists || []).map((list) =>
+          list.id === selectedList.id
+            ? {
+                ...list,
+                member_count: list.member_count + usersIds.length,
+              }
+            : list
+        )
+      );
+
+      onClose();
     },
   });
 
