@@ -2,8 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import _twitterSignIn from "twittersignin";
 import Cookies from "cookies";
 
-import { SITE_URL } from "../../utils/env-variables";
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -37,7 +35,7 @@ export default async function handler(
     cookies.set("twitterAccessToken", response.oauth_token);
     cookies.set("twitterAccessTokenSecret", response.oauth_token_secret);
 
-    res.redirect(302, `${SITE_URL}/dashboard/lists`);
+    res.redirect(302, `/dashboard/lists`);
   } catch (e) {
     res.status(400).send("ERROR");
   }

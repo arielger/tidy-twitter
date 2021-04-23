@@ -2,8 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import _twitterSignIn from "twittersignin";
 import Cookies from "cookies";
 
-import { API_URL } from "../../utils/env-variables";
-
 type Response = { requestToken: string } | "ERROR";
 
 export default async function handler(
@@ -20,8 +18,10 @@ export default async function handler(
   });
 
   try {
+    const { site_url } = req.query;
+
     const response = await twitterSignIn.getRequestToken({
-      oauth_callback: `${API_URL}/twitter-callback`,
+      oauth_callback: `${site_url}/api/twitter-callback`,
     });
 
     const requestToken = response.oauth_token;

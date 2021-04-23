@@ -1,5 +1,3 @@
-import { API_URL } from "./env-variables";
-
 import { User, Friend, List } from "../types";
 
 function handleErrors(response: Response) {
@@ -10,19 +8,19 @@ function handleErrors(response: Response) {
 }
 
 export function fetchTwitterRequestToken(): Promise<{ requestToken: string }> {
-  return fetch(`${API_URL}/twitter-login`)
+  return fetch(`/api/twitter-login?site_url=${window.location.origin}`)
     .then(handleErrors)
     .then((response) => response.json());
 }
 
 export function fetchUser(): Promise<User> {
-  return fetch(`${API_URL}/user`)
+  return fetch(`/api/user`)
     .then(handleErrors)
     .then((response) => response.json());
 }
 
 export function fetchFriends(): Promise<Friend[]> {
-  return fetch(`${API_URL}/friends`)
+  return fetch(`/api/friends`)
     .then(handleErrors)
     .then((response) => response.json());
 }
@@ -30,7 +28,7 @@ export function fetchFriends(): Promise<Friend[]> {
 // Lists
 
 export function fetchLists(): Promise<List[]> {
-  return fetch(`${API_URL}/list`)
+  return fetch(`/api/list`)
     .then(handleErrors)
     .then((response) => response.json());
 }
@@ -45,7 +43,7 @@ export function createList(list: {
     mode: isPrivate ? "private" : "public",
   });
 
-  return fetch(`${API_URL}/list/create`, {
+  return fetch(`/api/list/create`, {
     method: "post",
     body: JSON.stringify(transformToApi(list)),
   })
@@ -56,7 +54,7 @@ export function createList(list: {
 // List members
 
 export function fetchListMembers(listId: string): Promise<Friend[]> {
-  return fetch(`${API_URL}/list/${listId}/get-members`)
+  return fetch(`/api/list/${listId}/get-members`)
     .then(handleErrors)
     .then((response) => response.json());
 }
@@ -68,7 +66,7 @@ export function addListMembers({
   listId: string;
   usersIds: string[];
 }) {
-  return fetch(`${API_URL}/list/${listId}/add-members`, {
+  return fetch(`/api/list/${listId}/add-members`, {
     method: "post",
     body: JSON.stringify({
       user_id: usersIds.join(","),
@@ -83,7 +81,7 @@ export function removeListMember({
   listId: string;
   userId: string;
 }) {
-  return fetch(`${API_URL}/list/${listId}/remove-member`, {
+  return fetch(`/api/list/${listId}/remove-member`, {
     method: "post",
     body: JSON.stringify({
       user_id: userId,
