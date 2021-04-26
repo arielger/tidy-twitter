@@ -9,7 +9,7 @@ type TwitterApiList = List & {
   id_str: string;
 };
 type TwitterListResponse = {
-  data: TwitterApiList[];
+  data: { lists: TwitterApiList[] };
 };
 
 export default async function handler(
@@ -19,9 +19,11 @@ export default async function handler(
   const T = twitSetup(req, res);
 
   try {
-    const rawLists = (await T.get("lists/list")) as TwitterListResponse; // Not sure if casting is the best solution here
+    const rawLists = (await T.get("lists/ownerships", {
+      count: 1000,
+    })) as TwitterListResponse;
 
-    const lists = rawLists.data
+    const lists = rawLists.data.lists
       .map(({ id_str, name, uri, mode, member_count, created_at }) => ({
         id: id_str, // Use id_str instead of id, which is returning wrong number
         name,
