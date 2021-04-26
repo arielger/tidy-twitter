@@ -4,9 +4,6 @@ export type Friend = {
   screen_name: string;
   description: string;
   url: string;
-  followers_count: number;
-  friends_count: number;
-  statuses_count: number;
   profile_image_url: string;
 };
 

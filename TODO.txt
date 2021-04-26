@@ -1,5 +1,9 @@
 FUNCTIONALITY
-[] Import all followers instead of first 200 (api/friends)
+[OK] Import all followers instead of first 200 (api/friends)
+    Could use v2 API with https://github.com/draftbit/twitter-lite
+    [OK] Add pagination
+    [OK] Update mocks
+[] Migrate all endpoints to twitter-lite
 [] Add logout button in sidebar
 [] Use id_str in api/user (check this for all endpoints, DRY code)
 [] If there are no twitter cookies redirect to initial page (auth)
@@ -13,6 +17,9 @@ FUNCTIONALITY
 [] Add loading state for deleting behaviour in lists (or might use optimistic update also)
 
 NICE TO HAVE
+[] Review if ESLint config is working (react/jsx-key is not showing error)
+[] Improve error logging (front + back-end)
+[] Add google analytics
 [] Improve AddMembersDrawer style (add loading state)
 [] Fix repeated map for lists of members (add types)
 [] Review Twitter permissions asked

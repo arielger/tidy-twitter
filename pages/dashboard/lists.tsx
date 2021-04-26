@@ -37,7 +37,10 @@ export default function Home() {
     isLoading: isLoadingFriends,
     isError: errorLoadingFriends,
     data: friends,
-  } = useQuery("friends", fetchFriends);
+  } = useQuery("friends", () => fetchFriends(user.id), {
+    // @TODO: Check if we can get the user.id from auth token to improve load times
+    enabled: !!user?.id,
+  });
 
   const {
     isLoading: isLoadingLists,

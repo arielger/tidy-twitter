@@ -19,8 +19,8 @@ export function fetchUser(): Promise<User> {
     .then((response) => response.json());
 }
 
-export function fetchFriends(): Promise<Friend[]> {
-  return fetch(`/api/friends`)
+export function fetchFriends(userId: string): Promise<Friend[]> {
+  return fetch(`/api/friends?user_id=${userId}`)
     .then(handleErrors)
     .then((response) => response.json());
 }

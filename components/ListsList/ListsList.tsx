@@ -69,6 +69,7 @@ export default function ListsList({
         ) : (
           lists.map((list) => (
             <ListItem
+              key={list.id}
               list={list}
               selectedListId={selectedListId}
               setSelectedListId={setSelectedListId}
