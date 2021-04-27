@@ -82,7 +82,7 @@ export default function Home() {
   return (
     <Flex height="100vh" flexDir="row" overflow="hidden">
       {/* Use TS non-null assertion operator */}
-      <Sidebar user={user!} />
+      <Sidebar user={user} />
       <ListsList
         loading={isLoadingLists}
         error={errorFetchingLists}

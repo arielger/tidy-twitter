@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import _twitterSignIn from "twittersignin";
 import Cookies from "cookies";
 
 type Response = { requestToken: string } | "ERROR";

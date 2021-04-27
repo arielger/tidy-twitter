@@ -7,6 +7,8 @@ function handleErrors(response: Response) {
   return response;
 }
 
+// User
+
 export function fetchTwitterRequestToken(): Promise<{ requestToken: string }> {
   return fetch(`/api/twitter-login?site_url=${window.location.origin}`)
     .then(handleErrors)
@@ -18,6 +20,12 @@ export function fetchUser(): Promise<User> {
     .then(handleErrors)
     .then((response) => response.json());
 }
+
+export function logOut() {
+  return fetch(`/api/logout`).then(handleErrors);
+}
+
+// Following
 
 export function fetchFriends(userId: string): Promise<Friend[]> {
   return fetch(`/api/friends?user_id=${userId}`)

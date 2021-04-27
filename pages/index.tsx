@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import { Heading, Text, Button, Box, Flex } from "@chakra-ui/react";
 import { useMutation } from "react-query";
@@ -35,6 +36,7 @@ export default function Home() {
             Tidy Twitter lets you organize your followings into lists in a
             breeze.
           </Text>
+          {/* // @TODO: IF user is logged in show button to enter dashboard instead of log in */}
           <Button
             onClick={() => fetchTokenMutation.mutate()}
             isLoading={fetchTokenMutation.isLoading}

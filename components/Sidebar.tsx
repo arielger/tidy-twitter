@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Box,
+  Button,
   Heading,
   Link,
   Avatar,
@@ -9,25 +9,31 @@ import {
   Flex,
   VStack,
 } from "@chakra-ui/react";
-import { BiGroup, BiListUl } from "react-icons/bi";
+import { BiListUl, BiLogOut } from "react-icons/bi";
 import { FaTwitter } from "react-icons/fa";
 
+import { useAuth } from "../modules/auth";
 import ActiveNextLink from "./ActiveNextLink";
 
 import { User } from "../types";
 
 type props = {
-  user: User;
+  user?: User;
 };
 
 export default function Sidebar({ user }: props) {
+  const {
+    actions: { handleLogOut },
+  } = useAuth();
+
   return (
-    <Box
+    <Flex
+      flexDirection="column"
       w="72"
       height="full"
       backgroundColor="gray.100"
-      p="3"
-      pt="5"
+      px="4"
+      py="5"
       borderRight="1px"
       borderColor="gray.200"
     >
@@ -64,6 +70,24 @@ export default function Sidebar({ user }: props) {
           </Link>
         </ActiveNextLink>
       </VStack>
-    </Box>
+      <Button
+        onClick={handleLogOut}
+        variant="unstyled"
+        isFullWidth
+        p="2"
+        borderRadius="md"
+        display="flex"
+        fontSize="md"
+        justifyContent="left"
+        fontWeight="normal"
+        mt="auto"
+        _hover={{
+          backgroundColor: "gray.200",
+        }}
+      >
+        <Icon as={BiLogOut} mr="2" boxSize="6" color="gray.500"></Icon>
+        Log out
+      </Button>
+    </Flex>
   );
 }
