@@ -34,6 +34,7 @@ export default async function handler(
 
     cookies.set("twitterAccessToken", response.oauth_token);
     cookies.set("twitterAccessTokenSecret", response.oauth_token_secret);
+    cookies.set("isLoggedIn", "true", { httpOnly: false });
 
     res.redirect(302, `/dashboard/lists`);
   } catch (e) {

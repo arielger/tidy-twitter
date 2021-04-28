@@ -1,12 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "react-query";
 import { Flex, useDisclosure, Spinner } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 import Sidebar from "../../components/Sidebar";
 import ListsList from "../../components/ListsList/ListsList";
 import FollowingList from "../../components/FollowingList";
 import AddMembersDrawer from "../../components/AddMembersDrawer";
 import NewListModal from "../../components/NewListModal";
+import { useAuth } from "../../modules/auth";
 
 import {
   fetchUser,
@@ -16,12 +18,22 @@ import {
 } from "../../utils/api";
 
 export default function Home() {
+  const router = useRouter();
+  const {
+    value: { isAuthenticated },
+  } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated]);
+
   const {
     isOpen: isAddMembersOpen,
     onOpen: onAddMembersOpen,
     onClose: onAddMembersClose,
   } = useDisclosure();
-
   const {
     isOpen: isCreateListOpen,
     onOpen: onCreateListOpen,
@@ -69,7 +81,8 @@ export default function Home() {
     );
   }, [listMembers, friends]);
 
-  const isLoadingPage = isLoadingUser;
+  // Show spinner if user is not authenticated until the redirection to the landing page is completed
+  const isLoadingPage = isLoadingUser || !isAuthenticated;
 
   if (isLoadingPage) {
     return (
@@ -81,7 +94,6 @@ export default function Home() {
 
   return (
     <Flex height="100vh" flexDir="row" overflow="hidden">
-      {/* Use TS non-null assertion operator */}
       <Sidebar user={user} />
       <ListsList
         loading={isLoadingLists}

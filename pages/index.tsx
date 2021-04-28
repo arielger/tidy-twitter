@@ -1,14 +1,19 @@
-import { useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { Heading, Text, Button, Box, Flex } from "@chakra-ui/react";
 import { useMutation } from "react-query";
 
+import { useAuth } from "../modules/auth";
 import { fetchTwitterRequestToken } from "../utils/api";
 
 export default function Home() {
+  const {
+    value: { isAuthenticated },
+  } = useAuth();
+
   const fetchTokenMutation = useMutation(() =>
     fetchTwitterRequestToken().then(({ requestToken }) => {
-      window.location.href = `https://api.twitter.com/oauth/authorize?oauth_token=${requestToken}`;
+      window.location.href = `https://api.twitter.com/oauth/authenticate?oauth_token=${requestToken}`;
     })
   );
 
@@ -36,16 +41,23 @@ export default function Home() {
             Tidy Twitter lets you organize your followings into lists in a
             breeze.
           </Text>
-          {/* // @TODO: IF user is logged in show button to enter dashboard instead of log in */}
-          <Button
-            onClick={() => fetchTokenMutation.mutate()}
-            isLoading={fetchTokenMutation.isLoading}
-            loadingText="Connecting with Twitter"
-            size="lg"
-            colorScheme="twitter"
-          >
-            Connect with Twitter
-          </Button>
+          {isAuthenticated ? (
+            <Link href="/dashboard/lists">
+              <Button size="lg" colorScheme="twitter">
+                Go to the dashboard
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              onClick={() => fetchTokenMutation.mutate()}
+              isLoading={fetchTokenMutation.isLoading}
+              loadingText="Connecting with Twitter"
+              size="lg"
+              colorScheme="twitter"
+            >
+              Connect with Twitter
+            </Button>
+          )}
         </Box>
       </Flex>
     </div>

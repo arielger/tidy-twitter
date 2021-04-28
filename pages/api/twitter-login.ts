@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cookies from "cookies";
+import ms from "ms";
 
 type Response = { requestToken: string } | "ERROR";
 
@@ -27,7 +28,9 @@ export default async function handler(
     const requestTokenSecret = response.oauth_token_secret;
 
     // Need to save the request token secret to get accessToken in the callback
-    cookies.set("twitterRequestTokenSecret", requestTokenSecret);
+    cookies.set("twitterRequestTokenSecret", requestTokenSecret, {
+      maxAge: ms("30s"),
+    });
 
     // @TODO: CHECK IF CALLBACK IS CONFIRMED
     // const callbackConfirmed = response.oauth_callback_confirmed;

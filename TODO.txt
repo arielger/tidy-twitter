@@ -3,8 +3,8 @@ FUNCTIONALITY
     Could use v2 API with https://github.com/draftbit/twitter-lite
     [OK] Add pagination
     [OK] Update mocks
-[] Add logout button in sidebar
-    [] Check all remaining @TODOs
+[OK] Add logout button in sidebar
+    [OK] Check all remaining @TODOs
 [] Migrate all endpoints to twitter-lite
 [] Use id_str in api/user (check this for all endpoints, DRY code)
 [] If there are no twitter cookies redirect to initial page (auth)
@@ -17,6 +17,9 @@ FUNCTIONALITY
 [] Add missing handlers for msw (utils/mocks/handlers.js)
 [] Add loading state for deleting behaviour in lists (or might use optimistic update also)
 [] Review if any endpoint is not returning all results (need to review pagination)
+[] Move /dashboard/lists to /dashboard page
+[] Add expiration to cookies
+[] When getting an error for any Twitter request related to wrong credentials we should remove cookies
 
 NICE TO HAVE
 [] Review if ESLint config is working (react/jsx-key is not showing error)

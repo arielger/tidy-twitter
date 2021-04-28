@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext } from "react";
 import { useMutation } from "react-query";
 import { useQueryClient } from "react-query";
-import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 import { logOut } from "../utils/api";
 
@@ -20,13 +20,10 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const [authState, setAuthState] = useState({
-    // @TODO: Check how to get initial logged state
-    // cant access httpOnly cookies
-    isAuthenticated: false,
+    isAuthenticated: Cookies.get("isLoggedIn") === "true",
   });
 
   const handleLogIn = () => {
@@ -37,8 +34,8 @@ export const AuthContextProvider = ({
 
   const logOutMutation = useMutation(logOut, {
     onSuccess: () => {
-      router.push("/");
-      // @TODO: check how to solve user is null and page is still showing dashboard (page throw error)
+      // When setting isAuthenticated to false redirect is handled by each authenticated page
+      setAuthState((state) => ({ ...state, isAuthenticated: false }));
       queryClient.setQueryData("user", null);
     },
   });
