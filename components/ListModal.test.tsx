@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 
 import { render, screen } from "../utils/test-utils";
-import NewListModal from "./NewListModal";
+import ListModal from "./ListModal";
 
 const getModal = () =>
   screen.queryByRole("dialog", { name: /create a new list/i });
@@ -15,14 +15,14 @@ const getSubmitBtn = () =>
     name: /create/i,
   });
 
-describe("NewListModal", () => {
+describe("ListModal", () => {
   test("shouldn't display form if modal is not open", async () => {
-    render(<NewListModal isOpen={false} onClose={() => {}} />);
+    render(<ListModal isOpen={false} onClose={() => {}} />);
     expect(getModal()).not.toBeInTheDocument();
   });
 
   test("should display main form elements", async () => {
-    render(<NewListModal isOpen={true} onClose={() => {}} />);
+    render(<ListModal isOpen={true} onClose={() => {}} />);
 
     expect(getNameInput()).toHaveTextContent("");
     expect(getDescriptionInput()).toHaveTextContent("");
@@ -32,9 +32,7 @@ describe("NewListModal", () => {
 
   test("should show error and not submit the form if name is not completed", async () => {
     const onSubmit = jest.fn();
-    render(
-      <NewListModal isOpen={true} onClose={() => {}} onSubmit={onSubmit} />
-    );
+    render(<ListModal isOpen={true} onClose={() => {}} onSubmit={onSubmit} />);
     userEvent.click(getSubmitBtn());
     expect(getNameInput()).toBeInvalid();
     expect(onSubmit).not.toHaveBeenCalled();
@@ -48,9 +46,7 @@ describe("NewListModal", () => {
     };
 
     const onSubmit = jest.fn();
-    render(
-      <NewListModal isOpen={true} onClose={() => {}} onSubmit={onSubmit} />
-    );
+    render(<ListModal isOpen={true} onClose={() => {}} onSubmit={onSubmit} />);
     userEvent.type(getNameInput(), listData.name);
     userEvent.type(getDescriptionInput(), listData.description);
     userEvent.click(getPrivateCheckbox());

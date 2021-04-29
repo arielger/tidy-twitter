@@ -21,24 +21,59 @@ import {
 import { List } from "../types";
 import { createList } from "../utils/api";
 
-type props = {
+type formState = {
+  name: string;
+  description: string;
+  isPrivate: boolean;
+};
+
+type commonProps = {
   isOpen: boolean;
   onClose: () => void;
   onSubmit?: (formState: any) => void; // Only used for tests
 };
 
-const defaultFormState = {
+type createOrEditProps =
+  | { isEditing?: false; listToEdit?: never }
+  | { isEditing: true; listToEdit: List };
+
+type props = commonProps & createOrEditProps;
+
+const defaultFormState: formState = {
   name: "",
   description: "",
   isPrivate: false,
 };
 
-export default function NewListModal({ isOpen, onClose, onSubmit }: props) {
+const transformToForm = ({ name, description, mode }: List): formState => ({
+  name,
+  description,
+  isPrivate: mode === "private",
+});
+
+const transformToApi = ({
+  isPrivate,
+  ...list
+}: formState): Pick<List, "name" | "description" | "mode"> => ({
+  ...list,
+  mode: isPrivate ? "private" : "public",
+});
+
+export default function ListModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  isEditing = false,
+  listToEdit,
+}: props) {
   const queryClient = useQueryClient();
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const [formState, setFormState] = useState(defaultFormState);
+  const [formState, setFormState] = useState(
+    isEditing ? transformToForm(listToEdit) : defaultFormState
+  );
 
+  // @TODO: Review if creation mutation should be passed as prop
   const createListMutation = useMutation(createList, {
     onSuccess: (newList) => {
       onClose();
@@ -56,7 +91,7 @@ export default function NewListModal({ isOpen, onClose, onSubmit }: props) {
     if (formState.name === "") return;
 
     onSubmit && onSubmit(formState);
-    createListMutation.mutate(formState);
+    createListMutation.mutate(transformToApi(formState));
   };
 
   const handleInputChange = useCallback((event) => {
@@ -74,7 +109,9 @@ export default function NewListModal({ isOpen, onClose, onSubmit }: props) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Create a new list</ModalHeader>
+        <ModalHeader>
+          {isEditing ? `Edit list` : "Create a new list"}
+        </ModalHeader>
         <ModalCloseButton></ModalCloseButton>
         <ModalBody>
           <FormControl

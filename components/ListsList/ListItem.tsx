@@ -11,6 +11,7 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   BiDotsVerticalRounded,
@@ -21,6 +22,7 @@ import {
 } from "react-icons/bi";
 import { useMutation, useQueryClient } from "react-query";
 
+import ListModal from "../ListModal";
 import { deleteList } from "../../utils/api";
 import { List } from "../../types";
 
@@ -53,12 +55,22 @@ export default function ListItem({
   selectedListId,
   setSelectedListId,
 }: props) {
+  const {
+    isOpen: isEditListOpen,
+    onOpen: onEditListOpen,
+    onClose: onEditListClose,
+  } = useDisclosure();
+
   const listColor = getColorFromString(list.name);
   const listHoverColor = getColorFromString(list.name, 0.3);
   const isActive = list.id === selectedListId;
 
   const toast = useToast();
   const queryClient = useQueryClient();
+
+  const handleEditList = () => {
+    onEditListOpen();
+  };
 
   const handleOpenInTwitter = useCallback((listId) => {
     window.open(`https://twitter.com/i/lists/${listId}`, "_blank");
@@ -79,7 +91,7 @@ export default function ListItem({
   });
 
   return (
-    <Box position="relative" key={list.id}>
+    <Box position="relative">
       {/* Move menu outside list item to prevent <button> cannot appear as a descendant of <button> error */}
       <Menu placement="right-start" preventOverflow={false}>
         <MenuButton
@@ -92,7 +104,14 @@ export default function ListItem({
           variant="ghost"
         ></MenuButton>
         <MenuList>
-          <MenuItem icon={<BiPencil />}>Edit</MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleEditList();
+            }}
+            icon={<BiPencil />}
+          >
+            Edit
+          </MenuItem>
           <MenuItem
             onClick={() => deleteListMutation.mutate(list.id)}
             icon={<BiTrashAlt />}
@@ -139,6 +158,12 @@ export default function ListItem({
           <Text color="gray.500">{list.member_count} members</Text>
         </Box>
       </Flex>
+      <ListModal
+        isEditing={true}
+        listToEdit={list}
+        isOpen={isEditListOpen}
+        onClose={onEditListClose}
+      />
     </Box>
   );
 }

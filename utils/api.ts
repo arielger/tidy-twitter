@@ -44,16 +44,11 @@ export function fetchLists(): Promise<List[]> {
 export function createList(list: {
   name: string;
   description: string;
-  isPrivate: boolean;
+  mode: "private" | "public";
 }) {
-  const transformToApi = ({ isPrivate, ...list }: { isPrivate: boolean }) => ({
-    ...list,
-    mode: isPrivate ? "private" : "public",
-  });
-
   return fetch(`/api/list/create`, {
     method: "post",
-    body: JSON.stringify(transformToApi(list)),
+    body: JSON.stringify(list),
   })
     .then(handleErrors)
     .then((response) => response.json());

@@ -10,6 +10,7 @@ export type Friend = {
 export type List = {
   id: string;
   name: string;
+  description: string;
   uri: string;
   mode: "public" | "private";
   member_count: number;

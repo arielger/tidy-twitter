@@ -1,25 +1,22 @@
 FUNCTIONALITY
-[OK] Import all followers instead of first 200 (api/friends)
-    Could use v2 API with https://github.com/draftbit/twitter-lite
-    [OK] Add pagination
-    [OK] Update mocks
-[OK] Add logout button in sidebar
-    [OK] Check all remaining @TODOs
-[] Migrate all endpoints to twitter-lite
-[] Use id_str in api/user (check this for all endpoints, DRY code)
-[] If there are no twitter cookies redirect to initial page (auth)
-    [] Front-end
-    [] Also check in api endpoints (cookies should be set)
-[] Add error state for all components
-    [] When creating a new list (NewListModal)
-    [] When fetching fails (also check background fetch of react-query)
-[] Implement list edit functionality
-[] Add missing handlers for msw (utils/mocks/handlers.js)
+[WORKING ON] Implement list edit functionality
+    [OK] Completed UI setup
+    [] Now we should check how to interact with API, set loading states, pass onSubmit as prop sp
+    [] Add tests
+[] Handle not owned lists (you can't edit, unsubscribe instead of delete, can't add members)
 [] Add loading state for deleting behaviour in lists (or might use optimistic update also)
+[] If there are no twitter cookies redirect to initial page (auth)
+    [] Check in api endpoints (cookies should be set)
+[] Add error state for all components
+    [] When creating a new list (ListModal)
+    [] When fetching fails (also check background fetch of react-query)
+[] Add missing handlers for msw (utils/mocks/handlers.js)
 [] Review if any endpoint is not returning all results (need to review pagination)
 [] Move /dashboard/lists to /dashboard page
 [] Add expiration to cookies
 [] When getting an error for any Twitter request related to wrong credentials we should remove cookies
+[] Migrate all endpoints to twitter-lite
+[] Use id_str in api/user (check this for all endpoints, DRY code)
 
 NICE TO HAVE
 [] Review if ESLint config is working (react/jsx-key is not showing error)

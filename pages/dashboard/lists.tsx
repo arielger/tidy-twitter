@@ -7,7 +7,7 @@ import Sidebar from "../../components/Sidebar";
 import ListsList from "../../components/ListsList/ListsList";
 import FollowingList from "../../components/FollowingList";
 import AddMembersDrawer from "../../components/AddMembersDrawer";
-import NewListModal from "../../components/NewListModal";
+import ListModal from "../../components/ListModal";
 import { useAuth } from "../../modules/auth";
 
 import {
@@ -117,7 +117,7 @@ export default function Home() {
           selectedList={selectedList}
         />
       )}
-      <NewListModal isOpen={isCreateListOpen} onClose={onCreateListClose} />
+      <ListModal isOpen={isCreateListOpen} onClose={onCreateListClose} />
     </Flex>
   );
 }
