@@ -15,14 +15,14 @@ export const handlers = [
   rest.get("*/api/list", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(listsMock));
   }),
-  rest.get("*/api/list/:listId/get-members", (req, res, ctx) => {
+  rest.get("*/api/lists/:listId/get-members", (req, res, ctx) => {
     // const { listId } = req.params;
     return res(ctx.status(200), ctx.json(listMembersMock));
   }),
-  rest.post("*/api/list/create", (req, res, ctx) => {
+  rest.post("*/api/lists/create", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(listsMock[0]));
   }),
-  rest.post("*/api/list/:listId/remove-member", (req, res, ctx) => {
+  rest.post("*/api/lists/:listId/remove-member", (req, res, ctx) => {
     return res(ctx.status(200), ctx.text("OK"));
   }),
 ];

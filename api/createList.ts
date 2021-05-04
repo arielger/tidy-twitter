@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { twitSetup } from "../../../utils/apiSetup";
-import { List } from "../../../types";
+import { twitSetup } from "../utils/apiSetup";
+import { List } from "../types";
 
 export const config = {
   api: {
@@ -15,6 +15,7 @@ type TwitterApiList = List & {
 const transformFromApi = ({
   id_str,
   name,
+  description,
   uri,
   mode,
   member_count,
@@ -22,6 +23,7 @@ const transformFromApi = ({
 }: TwitterApiList) => ({
   id: id_str,
   name,
+  description,
   uri,
   mode,
   member_count,

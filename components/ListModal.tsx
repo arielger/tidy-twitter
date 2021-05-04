@@ -70,7 +70,7 @@ export default function ListModal({
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [formState, setFormState] = useState(
-    isEditing ? transformToForm(listToEdit) : defaultFormState
+    isEditing ? transformToForm(listToEdit!) : defaultFormState
   );
 
   // @TODO: Review if creation mutation should be passed as prop
@@ -159,7 +159,7 @@ export default function ListModal({
             isLoading={createListMutation.isLoading}
             colorScheme="blue"
           >
-            Create
+            {isEditing ? "Save" : "Create"}
           </Button>
         </ModalFooter>
       </ModalContent>

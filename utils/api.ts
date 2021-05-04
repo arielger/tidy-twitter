@@ -36,7 +36,7 @@ export function fetchFriends(userId: string): Promise<Friend[]> {
 // Lists
 
 export function fetchLists(): Promise<List[]> {
-  return fetch(`/api/list`)
+  return fetch(`/api/lists`)
     .then(handleErrors)
     .then((response) => response.json());
 }
@@ -46,7 +46,7 @@ export function createList(list: {
   description: string;
   mode: "private" | "public";
 }) {
-  return fetch(`/api/list/create`, {
+  return fetch(`/api/lists`, {
     method: "post",
     body: JSON.stringify(list),
   })
@@ -55,7 +55,7 @@ export function createList(list: {
 }
 
 export function deleteList(listId: string) {
-  return fetch(`/api/list/${listId}`, {
+  return fetch(`/api/lists/${listId}`, {
     method: "delete",
   }).then(handleErrors);
 }
@@ -63,7 +63,7 @@ export function deleteList(listId: string) {
 // List members
 
 export function fetchListMembers(listId: string): Promise<Friend[]> {
-  return fetch(`/api/list/${listId}/get-members`)
+  return fetch(`/api/lists/${listId}/get-members`)
     .then(handleErrors)
     .then((response) => response.json());
 }
@@ -75,7 +75,7 @@ export function addListMembers({
   listId: string;
   usersIds: string[];
 }) {
-  return fetch(`/api/list/${listId}/add-members`, {
+  return fetch(`/api/lists/${listId}/add-members`, {
     method: "post",
     body: JSON.stringify({
       user_id: usersIds.join(","),
@@ -90,7 +90,7 @@ export function removeListMember({
   listId: string;
   userId: string;
 }) {
-  return fetch(`/api/list/${listId}/remove-member`, {
+  return fetch(`/api/lists/${listId}/remove-member`, {
     method: "post",
     body: JSON.stringify({
       user_id: userId,

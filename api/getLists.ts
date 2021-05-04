@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { twitSetup } from "../../../utils/apiSetup";
-import { List } from "../../../types";
+import { twitSetup } from "../utils/apiSetup";
+import { List } from "../types";
 
 type Response = List[] | "ERROR";
 
