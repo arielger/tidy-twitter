@@ -1,34 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { twitSetup } from "../utils/apiSetup";
-import { List } from "../types";
+import { twitSetup } from "../../utils/apiSetup";
+import { List } from "../../types";
+
+import { TwitterApiList, transformListFromApi } from "./utils";
 
 export const config = {
   api: {
     bodyParser: true,
   },
 };
-
-type TwitterApiList = List & {
-  id_str: string;
-};
-
-const transformFromApi = ({
-  id_str,
-  name,
-  description,
-  uri,
-  mode,
-  member_count,
-  created_at,
-}: TwitterApiList) => ({
-  id: id_str,
-  name,
-  description,
-  uri,
-  mode,
-  member_count,
-  created_at,
-});
 
 type Response = List | "ERROR";
 
@@ -47,7 +27,7 @@ export default async function handler(
       mode,
     });
 
-    res.json(transformFromApi(response.data as TwitterApiList));
+    res.json(transformListFromApi(response.data as TwitterApiList));
   } catch (err) {
     res.status(400).send("ERROR");
   }

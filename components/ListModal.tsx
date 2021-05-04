@@ -19,9 +19,10 @@ import {
 } from "@chakra-ui/react";
 
 import { List } from "../types";
-import { createList } from "../utils/api";
+import { createList, updateList } from "../utils/api";
 
 type formState = {
+  id?: string;
   name: string;
   description: string;
   isPrivate: boolean;
@@ -45,7 +46,8 @@ const defaultFormState: formState = {
   isPrivate: false,
 };
 
-const transformToForm = ({ name, description, mode }: List): formState => ({
+const transformToForm = ({ id, name, description, mode }: List): formState => ({
+  id,
   name,
   description,
   isPrivate: mode === "private",
@@ -73,7 +75,7 @@ export default function ListModal({
     isEditing ? transformToForm(listToEdit!) : defaultFormState
   );
 
-  // @TODO: Review if creation mutation should be passed as prop
+  // @TODO: Review if creation or edit mutation should be passed as prop
   const createListMutation = useMutation(createList, {
     onSuccess: (newList) => {
       onClose();
@@ -86,12 +88,26 @@ export default function ListModal({
     },
   });
 
+  const editListMutation = useMutation(updateList, {
+    onSuccess: (editedList) => {
+      onClose();
+      setIsFormSubmitted(false);
+      queryClient.setQueryData<List[]>("lists", (lists) =>
+        (lists || []).map((list) =>
+          list.id === editedList.id ? editedList : list
+        )
+      );
+    },
+  });
+
   const handleFormSubmit = () => {
     setIsFormSubmitted(true);
     if (formState.name === "") return;
 
     onSubmit && onSubmit(formState);
-    createListMutation.mutate(transformToApi(formState));
+    isEditing
+      ? editListMutation.mutate(transformToApi(formState))
+      : createListMutation.mutate(transformToApi(formState));
   };
 
   const handleInputChange = useCallback((event) => {
@@ -150,13 +166,24 @@ export default function ListModal({
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={onClose} disabled={createListMutation.isLoading}>
+          <Button
+            onClick={onClose}
+            disabled={
+              isEditing
+                ? editListMutation.isLoading
+                : createListMutation.isLoading
+            }
+          >
             Cancel
           </Button>
           <Button
             ml="2"
             onClick={handleFormSubmit}
-            isLoading={createListMutation.isLoading}
+            isLoading={
+              isEditing
+                ? editListMutation.isLoading
+                : createListMutation.isLoading
+            }
             colorScheme="blue"
           >
             {isEditing ? "Save" : "Create"}

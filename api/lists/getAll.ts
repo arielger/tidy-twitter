@@ -1,13 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { twitSetup } from "../utils/apiSetup";
-import { List } from "../types";
+import { twitSetup } from "../../utils/apiSetup";
+import { List } from "../../types";
+
+import { TwitterApiList, transformListFromApi } from "./utils";
 
 type Response = List[] | "ERROR";
 
-type TwitterApiList = List & {
-  id_str: string;
-};
 type TwitterListResponse = {
   data: { lists: TwitterApiList[] };
 };
@@ -24,25 +23,7 @@ export default async function handler(
     })) as TwitterListResponse;
 
     const lists = rawLists.data.lists
-      .map(
-        ({
-          id_str,
-          name,
-          description,
-          uri,
-          mode,
-          member_count,
-          created_at,
-        }) => ({
-          id: id_str, // Use id_str instead of id, which is returning wrong number
-          name,
-          description,
-          uri,
-          mode,
-          member_count,
-          created_at,
-        })
-      )
+      .map(transformListFromApi)
       // Sort by member count DESC
       .sort((listA, listB) => listB.member_count - listA.member_count);
 

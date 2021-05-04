@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import createList from "../../../api/createList";
-import getLists from "../../../api/getLists";
+import createList from "../../../api/lists/create";
+import getLists from "../../../api/lists/getAll";
 
 export default async function handler(
   req: NextApiRequest,

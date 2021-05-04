@@ -158,6 +158,7 @@ export default function ListItem({
           <Text color="gray.500">{list.member_count} members</Text>
         </Box>
       </Flex>
+      {/* // @TODO: Only render one modal -> Fix error when re-opening modal after edit */}
       <ListModal
         isEditing={true}
         listToEdit={list}

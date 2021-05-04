@@ -41,13 +41,24 @@ export function fetchLists(): Promise<List[]> {
     .then((response) => response.json());
 }
 
-export function createList(list: {
+type listFormValues = {
   name: string;
   description: string;
   mode: "private" | "public";
-}) {
+};
+
+export function createList(list: listFormValues) {
   return fetch(`/api/lists`, {
     method: "post",
+    body: JSON.stringify(list),
+  })
+    .then(handleErrors)
+    .then((response) => response.json());
+}
+
+export function updateList(list: listFormValues & { id: string }) {
+  return fetch(`/api/lists/${list.id}`, {
+    method: "PUT",
     body: JSON.stringify(list),
   })
     .then(handleErrors)
