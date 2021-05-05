@@ -2,6 +2,7 @@ import userEvent from "@testing-library/user-event";
 
 import { render, screen } from "../utils/test-utils";
 import ListModal from "./ListModal";
+import listsMock from "../utils/mocks/lists.json";
 
 const getModal = () =>
   screen.queryByRole("dialog", { name: /create a new list/i });
@@ -24,8 +25,8 @@ describe("ListModal", () => {
   test("should display main form elements", async () => {
     render(<ListModal isOpen={true} onClose={() => {}} />);
 
-    expect(getNameInput()).toHaveTextContent("");
-    expect(getDescriptionInput()).toHaveTextContent("");
+    expect(getNameInput()).toHaveValue("");
+    expect(getDescriptionInput()).toHaveValue("");
     expect(getPrivateCheckbox());
     expect(getSubmitBtn());
   });
@@ -52,5 +53,21 @@ describe("ListModal", () => {
     userEvent.click(getPrivateCheckbox());
     userEvent.click(getSubmitBtn());
     expect(onSubmit).toHaveBeenCalledWith(listData);
+  });
+
+  test("should show initial values when editing list", () => {
+    const mockedList = listsMock[0];
+    render(
+      <ListModal
+        isOpen={true}
+        onClose={() => {}}
+        isEditing={true}
+        listToEdit={mockedList}
+      />
+    );
+
+    expect(getNameInput()).toHaveValue(mockedList.name);
+    expect(getDescriptionInput()).toHaveValue(mockedList.description);
+    expect(getPrivateCheckbox() as HTMLInputElement).toBeChecked();
   });
 });
