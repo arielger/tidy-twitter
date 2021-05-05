@@ -1,11 +1,5 @@
 FUNCTIONALITY
-[OK] Implement list edit functionality
-    [OK] Completed UI setup
-    [OK] Now we should check how to interact with API, set loading states, pass onSubmit as prop sp
-    [OK] Refactor ListModal component
-    [] Add tests
-[] Handle not owned lists (you can't edit, unsubscribe instead of delete, can't add members)
-[] Add loading state for deleting behaviour in lists (or might use optimistic update also)
+[OK] Add loading state for deleting behaviour in lists (or might use optimistic update also)
 [] If there are no twitter cookies redirect to initial page (auth)
     [] Check in api endpoints (cookies should be set)
 [] Add error state for all components
@@ -18,6 +12,7 @@ FUNCTIONALITY
 [] When getting an error for any Twitter request related to wrong credentials we should remove cookies
 [] Migrate all endpoints to twitter-lite
 [] Use id_str in api/user (check this for all endpoints, DRY code)
+[] Handle not owned lists (you can't edit, unsubscribe instead of delete, can't add members)
 
 NICE TO HAVE
 [] Review if ESLint config is working (react/jsx-key is not showing error)

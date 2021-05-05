@@ -66,11 +66,26 @@ export default function ListItem({
   }, []);
 
   const deleteListMutation = useMutation(deleteList, {
-    onSuccess: (_, removedListId) => {
+    // Optimistic update
+    onMutate: (deletedListId: string) => {
+      const oldList = queryClient.getQueryData<List[]>("lists");
       queryClient.setQueryData<List[]>("lists", (lists) =>
-        (lists || [])?.filter((list) => list.id !== removedListId)
+        (lists || [])?.filter((list) => list.id !== deletedListId)
       );
+      return { oldList };
+    },
+    onError: (err, variables, context) => {
+      toast({
+        title: "Error deleting list",
+        status: "error",
+        isClosable: true,
+      });
 
+      if (context?.oldList) {
+        queryClient.setQueryData("lists", context.oldList);
+      }
+    },
+    onSuccess: () => {
       toast({
         title: "List deleted",
         status: "success",
