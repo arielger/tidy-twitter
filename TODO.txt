@@ -1,7 +1,8 @@
 FUNCTIONALITY
-[WORKING ON] Implement list edit functionality
+[OK] Implement list edit functionality
     [OK] Completed UI setup
-    [] Now we should check how to interact with API, set loading states, pass onSubmit as prop sp
+    [OK] Now we should check how to interact with API, set loading states, pass onSubmit as prop sp
+    [OK] Refactor ListModal component
     [] Add tests
 [] Handle not owned lists (you can't edit, unsubscribe instead of delete, can't add members)
 [] Add loading state for deleting behaviour in lists (or might use optimistic update also)

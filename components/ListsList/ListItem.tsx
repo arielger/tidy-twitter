@@ -11,18 +11,15 @@ import {
   MenuList,
   MenuItem,
   useToast,
-  useDisclosure,
 } from "@chakra-ui/react";
 import {
   BiDotsVerticalRounded,
   BiPencil,
   BiTrashAlt,
   BiLink,
-  BiListUl,
 } from "react-icons/bi";
 import { useMutation, useQueryClient } from "react-query";
 
-import ListModal from "../ListModal";
 import { deleteList } from "../../utils/api";
 import { List } from "../../types";
 
@@ -48,29 +45,21 @@ type props = {
   list: List;
   selectedListId?: string;
   setSelectedListId: (listID: string) => void;
+  onEditList: (listID: string) => void;
 };
 
 export default function ListItem({
   list,
   selectedListId,
   setSelectedListId,
+  onEditList,
 }: props) {
-  const {
-    isOpen: isEditListOpen,
-    onOpen: onEditListOpen,
-    onClose: onEditListClose,
-  } = useDisclosure();
-
   const listColor = getColorFromString(list.name);
   const listHoverColor = getColorFromString(list.name, 0.3);
   const isActive = list.id === selectedListId;
 
   const toast = useToast();
   const queryClient = useQueryClient();
-
-  const handleEditList = () => {
-    onEditListOpen();
-  };
 
   const handleOpenInTwitter = useCallback((listId) => {
     window.open(`https://twitter.com/i/lists/${listId}`, "_blank");
@@ -104,12 +93,7 @@ export default function ListItem({
           variant="ghost"
         ></MenuButton>
         <MenuList>
-          <MenuItem
-            onClick={() => {
-              handleEditList();
-            }}
-            icon={<BiPencil />}
-          >
+          <MenuItem onClick={() => onEditList(list.id)} icon={<BiPencil />}>
             Edit
           </MenuItem>
           <MenuItem
@@ -158,13 +142,6 @@ export default function ListItem({
           <Text color="gray.500">{list.member_count} members</Text>
         </Box>
       </Flex>
-      {/* // @TODO: Only render one modal -> Fix error when re-opening modal after edit */}
-      <ListModal
-        isEditing={true}
-        listToEdit={list}
-        isOpen={isEditListOpen}
-        onClose={onEditListClose}
-      />
     </Box>
   );
 }

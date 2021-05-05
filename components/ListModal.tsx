@@ -100,6 +100,10 @@ export default function ListModal({
     },
   });
 
+  const isLoading = isEditing
+    ? editListMutation.isLoading
+    : createListMutation.isLoading;
+
   const handleFormSubmit = () => {
     setIsFormSubmitted(true);
     if (formState.name === "") return;
@@ -166,24 +170,13 @@ export default function ListModal({
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button
-            onClick={onClose}
-            disabled={
-              isEditing
-                ? editListMutation.isLoading
-                : createListMutation.isLoading
-            }
-          >
+          <Button onClick={onClose} disabled={isLoading}>
             Cancel
           </Button>
           <Button
             ml="2"
             onClick={handleFormSubmit}
-            isLoading={
-              isEditing
-                ? editListMutation.isLoading
-                : createListMutation.isLoading
-            }
+            isLoading={isLoading}
             colorScheme="blue"
           >
             {isEditing ? "Save" : "Create"}

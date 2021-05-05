@@ -1,7 +1,16 @@
-import React from "react";
-import { Heading, Text, Button, Flex, Icon, Spinner } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Heading,
+  Text,
+  Button,
+  Flex,
+  Icon,
+  Spinner,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { BiListUl } from "react-icons/bi";
 
+import ListModal from "../ListModal";
 import ListItem from "./ListItem";
 
 function EmptyState() {
@@ -37,6 +46,19 @@ export default function ListsList({
   setSelectedListId,
   handleCreateList,
 }: props) {
+  const [editedListId, setEditedListId] = useState("");
+  const {
+    isOpen: isEditListOpen,
+    onOpen: onEditListOpen,
+    onClose: onEditListClose,
+  } = useDisclosure();
+
+  const onEditList = (listId: string) => {
+    setEditedListId(listId);
+    onEditListOpen();
+  };
+  const listToEdit = lists?.find((list) => list.id === editedListId);
+
   return (
     <Flex
       width="xs"
@@ -73,10 +95,20 @@ export default function ListsList({
               list={list}
               selectedListId={selectedListId}
               setSelectedListId={setSelectedListId}
+              onEditList={onEditList}
             />
           ))
         )}
       </Flex>
+      {listToEdit && (
+        <ListModal
+          key={editedListId}
+          isEditing={true}
+          listToEdit={listToEdit}
+          isOpen={isEditListOpen}
+          onClose={onEditListClose}
+        />
+      )}
     </Flex>
   );
 }
