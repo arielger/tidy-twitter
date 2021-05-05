@@ -10,7 +10,6 @@ const AuthContext = createContext<{
     isAuthenticated: boolean;
   };
   actions: {
-    handleLogIn: () => void;
     handleLogOut: () => void;
   };
 }>({});
@@ -25,12 +24,6 @@ export const AuthContextProvider = ({
   const [authState, setAuthState] = useState({
     isAuthenticated: Cookies.get("isLoggedIn") === "true",
   });
-
-  const handleLogIn = () => {
-    setAuthState({
-      isAuthenticated: true,
-    });
-  };
 
   const logOutMutation = useMutation(logOut, {
     onSuccess: () => {
@@ -49,7 +42,6 @@ export const AuthContextProvider = ({
       value={{
         value: authState,
         actions: {
-          handleLogIn,
           handleLogOut,
         },
       }}

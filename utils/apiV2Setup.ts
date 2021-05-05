@@ -12,6 +12,10 @@ export function twitSetup(
   const twitterAccessToken = cookies.get("twitterAccessToken");
   const twitterAccessTokenSecret = cookies.get("twitterAccessTokenSecret");
 
+  if (!twitterAccessToken || !twitterAccessTokenSecret) {
+    res.status(401).send("Missing Twitter credentials");
+  }
+
   return new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY!,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET!,

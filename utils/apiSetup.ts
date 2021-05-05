@@ -8,6 +8,10 @@ export function twitSetup(req: NextApiRequest, res: NextApiResponse): Twit {
   const twitterAccessToken = cookies.get("twitterAccessToken");
   const twitterAccessTokenSecret = cookies.get("twitterAccessTokenSecret");
 
+  if (!twitterAccessToken || !twitterAccessTokenSecret) {
+    res.status(401).send("Missing Twitter credentials");
+  }
+
   return new Twit({
     consumer_key: process.env.TWITTER_CONSUMER_KEY!,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET!,

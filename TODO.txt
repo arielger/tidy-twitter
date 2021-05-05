@@ -1,7 +1,6 @@
 FUNCTIONALITY
-[OK] Add loading state for deleting behaviour in lists (or might use optimistic update also)
-[] If there are no twitter cookies redirect to initial page (auth)
-    [] Check in api endpoints (cookies should be set)
+[OK] If there are no twitter cookies redirect to initial page (auth)
+    [OK] Check in api endpoints (cookies should be set)
 [] Add error state for all components
     [] When creating a new list (ListModal)
     [] When fetching fails (also check background fetch of react-query)
