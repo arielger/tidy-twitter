@@ -42,7 +42,7 @@ export default function Home() {
             breeze.
           </Text>
           {isAuthenticated ? (
-            <Link href="/dashboard/lists">
+            <Link href="/dashboard">
               <Button size="lg" colorScheme="twitter">
                 Go to the dashboard
               </Button>

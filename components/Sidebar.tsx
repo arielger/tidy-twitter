@@ -43,17 +43,17 @@ export default function Sidebar({ user }: props) {
       </Heading>
       <Flex>
         <Avatar
-          name={user.name}
-          src={user.profile_image_url.replace("normal", "bigger")}
+          name={user?.name}
+          src={user?.profile_image_url.replace("normal", "bigger")}
           mr="3"
         ></Avatar>
         <Flex flexDirection="column" mb="8">
-          <Text>{user.name}</Text>
-          <Text>@{user.screen_name}</Text>
+          <Text>{user?.name}</Text>
+          <Text>@{user?.screen_name}</Text>
         </Flex>
       </Flex>
       <VStack alignItems="stretch" spacing="2">
-        <ActiveNextLink href="/dashboard/lists">
+        <ActiveNextLink href="/dashboard">
           <Link
             p="2"
             borderRadius="md"

@@ -1,6 +1,6 @@
 FUNCTIONALITY
-[] Run tests on github actions
-[] Move /dashboard/lists to /dashboard page
+[OK] Run tests on github actions
+[OK] Move /dashboard/lists to /dashboard page
 [] Add error state for all components
     [] When creating a new list (ListModal)
     [] When fetching fails (also check background fetch of react-query)

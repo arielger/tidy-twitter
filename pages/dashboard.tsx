@@ -3,19 +3,19 @@ import { useQuery } from "react-query";
 import { Flex, useDisclosure, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-import Sidebar from "../../components/Sidebar";
-import ListsList from "../../components/ListsList/ListsList";
-import FollowingList from "../../components/FollowingList";
-import AddMembersDrawer from "../../components/AddMembersDrawer";
-import ListModal from "../../components/ListModal";
-import { useAuth } from "../../modules/auth";
+import Sidebar from "../components/Sidebar";
+import ListsList from "../components/ListsList/ListsList";
+import FollowingList from "../components/FollowingList";
+import AddMembersDrawer from "../components/AddMembersDrawer";
+import ListModal from "../components/ListModal";
+import { useAuth } from "../modules/auth";
 
 import {
   fetchUser,
   fetchFriends,
   fetchLists,
   fetchListMembers,
-} from "../../utils/api";
+} from "../utils/api";
 
 export default function Home() {
   const router = useRouter();
