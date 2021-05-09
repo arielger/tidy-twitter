@@ -29,4 +29,4 @@ jobs:
         run: yarn install
 
       - name: Jest unit tests
-        run: jest
+        run: yarn run test
