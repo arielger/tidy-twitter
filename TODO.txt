@@ -1,17 +1,18 @@
 FUNCTIONALITY
-[OK] If there are no twitter cookies redirect to initial page (auth)
-    [OK] Check in api endpoints (cookies should be set)
+[] Run tests on github actions
+[] Move /dashboard/lists to /dashboard page
 [] Add error state for all components
     [] When creating a new list (ListModal)
     [] When fetching fails (also check background fetch of react-query)
+[] By default select the first list
 [] Add missing handlers for msw (utils/mocks/handlers.js)
 [] Review if any endpoint is not returning all results (need to review pagination)
-[] Move /dashboard/lists to /dashboard page
 [] Add expiration to cookies
 [] When getting an error for any Twitter request related to wrong credentials we should remove cookies
 [] Migrate all endpoints to twitter-lite
 [] Use id_str in api/user (check this for all endpoints, DRY code)
 [] Handle not owned lists (you can't edit, unsubscribe instead of delete, can't add members)
+[] Add validation when deleting list with more than x members
 
 NICE TO HAVE
 [] Review if ESLint config is working (react/jsx-key is not showing error)
