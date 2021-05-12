@@ -1,10 +1,10 @@
 FUNCTIONALITY
 [OK] Run tests on github actions
 [OK] Move /dashboard/lists to /dashboard page
+[OK] By default select the first list
 [] Add error state for all components
     [] When creating a new list (ListModal)
     [] When fetching fails (also check background fetch of react-query)
-[] By default select the first list
 [] Add missing handlers for msw (utils/mocks/handlers.js)
 [] Review if any endpoint is not returning all results (need to review pagination)
 [] Add expiration to cookies
@@ -13,6 +13,7 @@ FUNCTIONALITY
 [] Use id_str in api/user (check this for all endpoints, DRY code)
 [] Handle not owned lists (you can't edit, unsubscribe instead of delete, can't add members)
 [] Add validation when deleting list with more than x members
+[] Handle not authenticated in api
 
 NICE TO HAVE
 [] Review if ESLint config is working (react/jsx-key is not showing error)

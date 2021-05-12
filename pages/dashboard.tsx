@@ -58,7 +58,14 @@ export default function Home() {
     isLoading: isLoadingLists,
     isError: errorFetchingLists,
     data: lists,
-  } = useQuery("lists", fetchLists);
+  } = useQuery("lists", fetchLists, {
+    onSuccess: (lists) => {
+      // Set first list as default selected
+      if (lists.length > 0 && !selectedListId) {
+        setSelectedListId(lists[0].id);
+      }
+    },
+  });
   const [selectedListId, setSelectedListId] = useState<string>();
   const selectedList =
     lists && lists.find((list) => list.id === selectedListId);
