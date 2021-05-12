@@ -1,20 +1,12 @@
 import { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import { AuthContextProvider } from "../modules/auth";
+import queryClient from "../utils/queryClient";
 
 import "../styles/globals.css";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  },
-});
 
 if (process.env.NEXT_PUBLIC_ENABLE_API_MOCKS === "true") {
   require("../utils/mocks/setup");

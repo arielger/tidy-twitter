@@ -1,19 +1,12 @@
 import React from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import { ChakraProvider } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
+
+import queryClient from "./queryClient";
 
 // React testing library setup
 // https://testing-library.com/docs/react-testing-library/setup
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false, // Prevent retries that might cause timeout when testing error state
-      refetchOnWindowFocus: false,
-    },
-  },
-});
 
 function TestsProviders({ children }: { children?: React.ReactNode }) {
   return (
