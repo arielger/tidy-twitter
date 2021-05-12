@@ -106,7 +106,7 @@ export default function ListModal({
 
   const handleFormSubmit = () => {
     setIsFormSubmitted(true);
-    if (formState.name === "") return;
+    if (formState.name.trim() === "") return;
 
     onSubmit && onSubmit(formState);
     isEditing
@@ -136,7 +136,7 @@ export default function ListModal({
         <ModalBody>
           <FormControl
             isRequired
-            isInvalid={isFormSubmitted && formState.name === ""}
+            isInvalid={isFormSubmitted && formState.name.trim() === ""}
           >
             <FormLabel>Name</FormLabel>
             <Input
