@@ -16,6 +16,7 @@ import {
   Textarea,
   FormHelperText,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 
 import { List } from "../types";
@@ -69,6 +70,7 @@ export default function ListModal({
   listToEdit,
 }: props) {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [formState, setFormState] = useState(
@@ -86,6 +88,14 @@ export default function ListModal({
         newList,
       ]);
     },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: `There was an error creating the list`,
+        status: "error",
+        isClosable: true,
+      });
+    },
   });
 
   const editListMutation = useMutation(updateList, {
@@ -97,6 +107,14 @@ export default function ListModal({
           list.id === editedList.id ? editedList : list
         )
       );
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: `There was an error editing the list`,
+        status: "error",
+        isClosable: true,
+      });
     },
   });
 
