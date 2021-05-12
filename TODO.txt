@@ -1,3 +1,8 @@
+MARKETING
+[OK] Update favicon
+[] Update README.md
+[] Review landing page?
+
 FUNCTIONALITY
 [OK] Run tests on github actions
 [OK] Move /dashboard/lists to /dashboard page
