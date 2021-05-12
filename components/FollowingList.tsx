@@ -61,6 +61,7 @@ function FollowingMember({
       borderColor="gray.200"
       p="3"
       data-testid={`following-list-member-${user.id}`}
+      height="72px"
     >
       <Avatar
         mr="3"
@@ -99,7 +100,11 @@ export default function FollowingList({
   selectedList,
   handleAddMembers,
 }: props) {
-  const { isLoading, isError, data: users } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: users,
+  } = useQuery(
     ["list", "members", selectedList?.id],
     () => fetchListMembers(selectedList?.id!),
     {

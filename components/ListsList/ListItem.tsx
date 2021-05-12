@@ -55,7 +55,6 @@ export default function ListItem({
   onEditList,
 }: props) {
   const listColor = getColorFromString(list.name);
-  const listHoverColor = getColorFromString(list.name, 0.3);
   const isActive = list.id === selectedListId;
 
   const toast = useToast();
@@ -129,15 +128,18 @@ export default function ListItem({
         as="button"
         p="3"
         w="100%"
+        height="72px"
         borderBottom="1px"
         borderColor="gray.200"
-        borderLeftWidth="4px"
+        borderLeftWidth="6px"
         _hover={{
-          borderLeftColor: isActive ? listColor : listHoverColor,
+          borderLeftColor: isActive ? listColor : "transparent",
+          backgroundColor: "gray.100",
         }}
         _focus={{
-          boxShadow: "outline",
           outline: "none",
+          borderLeftColor: isActive ? listColor : "transparent",
+          backgroundColor: "gray.100",
         }}
         _active={{
           borderLeftColor: listColor,

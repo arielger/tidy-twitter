@@ -66,6 +66,7 @@ export default function ListsList({
       flexDirection="column"
       borderRight="1px"
       borderColor="gray.200"
+      backgroundColor="gray.50"
     >
       <Flex
         h="24"

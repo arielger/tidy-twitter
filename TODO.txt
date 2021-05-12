@@ -3,7 +3,7 @@ FUNCTIONALITY
 [OK] Move /dashboard/lists to /dashboard page
 [OK] By default select the first list
 [] Add error state for all components
-    [] When creating a new list (ListModal)
+    [OK] When creating a new list (ListModal)
     [] When fetching fails (also check background fetch of react-query)
 [] Add missing handlers for msw (utils/mocks/handlers.js)
 [] Review if any endpoint is not returning all results (need to review pagination)
@@ -20,8 +20,8 @@ NICE TO HAVE
 [] Improve error logging (front + back-end)
 [] Add google analytics
 [] Improve AddMembersDrawer style (add loading state)
-[] Fix repeated map for lists of members (add types)
-[] Review Twitter permissions asked
+[OK] Fix repeated map for lists of members (add types)
+[OK] Review Twitter permissions asked
 [] Add modal when trying to delete list with more than n members
 
 CONFIG

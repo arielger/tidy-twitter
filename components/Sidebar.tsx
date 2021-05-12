@@ -31,10 +31,10 @@ export default function Sidebar({ user }: props) {
       flexDirection="column"
       w="72"
       height="full"
-      backgroundColor="gray.100"
+      backgroundColor="gray.800"
+      color="gray.50"
       px="4"
       py="5"
-      borderRight="1px"
       borderColor="gray.200"
     >
       <Heading display="flex" alignItems="center" size="md" mb="8">
@@ -57,11 +57,11 @@ export default function Sidebar({ user }: props) {
           <Link
             p="2"
             borderRadius="md"
-            backgroundColor="gray.200"
+            backgroundColor="gray.900"
             display="flex"
             alignItems="center"
             _hover={{
-              backgroundColor: "gray.200",
+              backgroundColor: "gray.900",
               textDecoration: "none",
             }}
           >
@@ -82,7 +82,7 @@ export default function Sidebar({ user }: props) {
         fontWeight="normal"
         mt="auto"
         _hover={{
-          backgroundColor: "gray.200",
+          backgroundColor: "gray.900",
         }}
       >
         <Icon as={BiLogOut} mr="2" boxSize="6" color="gray.500"></Icon>
